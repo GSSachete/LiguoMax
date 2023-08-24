@@ -1,12 +1,80 @@
-// LiguoMax.cpp : Este arquivo contém a função 'main'. A execução do programa começa e termina ali.
-//
 
 #include <iostream>
+using namespace std;
+struct idiomas {
+    int cod_idioma;
+    char desc[30];
 
-int main()
+};
+struct idiomasdex {
+    int cod;
+    int end;
+
+};
+struct licoes {
+    int cod_licao;
+    int cod_idioma;
+    int total_nivel;
+
+
+};
+struct licoesdex {
+    int cod;
+    int end;
+
+};
+struct exercicios {
+    int cod_exercicio;
+    int nivel_dificuldade;
+    char perguntas[30]; 
+    char resposta[30];
+    float pontos;
+
+};
+struct exerciciosdex {
+    int cod;
+    int end;
+
+};
+struct usuarios {
+    int cod_usuario;
+    char nome[30];
+    int cod_idioma;
+    int nivel_atual;
+    float pontos_total;
+
+};
+struct usuariosdex {
+    int cod;
+    int end;
+
+};
+void inseriridioma() {
+
+}
+void inserirlicao() {
+
+}
+void inserirexercicio() {
+
+}
+void inserirusuario() {
+
+}
+    int main()
 {
     std::cout << "Hello World!\n";
 }
+
+
+
+
+
+
+
+
+
+
 
 // Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração
 // Depurar programa: F5 ou menu Depurar > Iniciar Depuração
