@@ -1,9 +1,11 @@
 
 #include <iostream>
+#include <locale>
 using namespace std;
 struct idiomas {
     int cod_idioma;
-    char desc[30];
+    char desc[25];
+    bool delet;
 
 };
 struct idiomasdex {
@@ -15,7 +17,7 @@ struct licoes {
     int cod_licao;
     int cod_idioma;
     int total_nivel;
-
+    bool delet;
 
 };
 struct licoesdex {
@@ -29,11 +31,12 @@ struct exercicios {
     char perguntas[30]; 
     char resposta[30];
     float pontos;
-
+    bool delet;
 };
 struct exerciciosdex {
     int cod;
     int end;
+
 
 };
 struct usuarios {
@@ -42,14 +45,33 @@ struct usuarios {
     int cod_idioma;
     int nivel_atual;
     float pontos_total;
-
+    bool delet;
 };
 struct usuariosdex {
     int cod;
     int end;
 
 };
-void inseriridioma() {
+void inseriridioma(idiomas duo [], idiomasdex lingo[], int g, int vet[]) {
+    system("clear||cls");
+    char fechar[2]; 
+    cout << "-----------------------CADASTRAR IDIOMA-----------------------"<<endl;
+    for (int i = vet[0];i < g; i++) {
+        cout << "Por favor informe o código"<<endl;
+        cin >> duo[i].cod_idioma;
+        cout << "Por favor informe a descrição do idioma"<<endl;
+        cin >> duo[i].desc;
+        cin.ignore();
+        cin.getline(duo[i].desc, 25);
+        duo[i].delet = false;
+        vet[0]++;
+        cout << "Para caso deseje cadastrar outro idioma digite 'S' caso deseje finalizar a operação digite 'N' ";
+        cin >> fechar;
+        if (strcmp(fechar, "n") == 0) {
+            return;
+        }
+
+    }
 
 }
 void inserirlicao() {
@@ -63,7 +85,37 @@ void inserirusuario() {
 }
     int main()
 {
-    std::cout << "Hello World!\n";
+        setlocale(LC_ALL, "portuguese");
+        const int g = 10;
+        int vet[4] = { 0 };
+        int option = 0;
+        idiomas idioma[g];
+        idiomasdex idiomadex[g];
+        while (true) {
+            system("clear||cls");
+            cout << "==============DUOLINGO==============" << endl;
+            cout << "Para cadastrar algo digite 1" << endl;
+            cin >> option;
+            switch (option) {
+            case 1:
+                system("clear||cls");
+                cout << "Para cadastrar idioma digite 1";
+                cout << "Para sair digite 0";
+                cin >> option;
+                switch (option) {
+                case 1:
+                    inseriridioma(idioma, idiomadex, g, vet) {
+                        break;
+                case 0:
+                    break;
+                    }
+                    break;
+                }
+
+            }
+
+        };
+
 }
 
 
