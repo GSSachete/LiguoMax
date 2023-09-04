@@ -65,7 +65,7 @@ void inseriridioma(idiomas duo [], idiomasdex lingo[], int g, int vet[]) {
         cin.getline(duo[i].desc, 25);
         duo[i].delet = false;
         vet[0]++;
-        cout << "Para caso deseje cadastrar outro idioma digite 'S' caso deseje finalizar a operação digite 'N' ";
+        cout << "Para caso deseje cadastrar outro idioma digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
         if (strcmp(fechar, "n") == 0) {
             return;
@@ -99,18 +99,18 @@ void inserirusuario() {
             switch (option) {
             case 1:
                 system("clear||cls");
-                cout << "Para cadastrar idioma digite 1";
-                cout << "Para sair digite 0";
+                cout << "Para cadastrar idioma digite 1"<<endl;
+                cout << "Para sair digite 0"<<endl;
                 cin >> option;
                 switch (option) {
                 case 1:
-                    inseriridioma(idioma, idiomadex, g, vet) {
+                    inseriridioma(idioma, idiomadex, g, vet);
                         break;
                 case 0:
                     break;
                     }
                     break;
-                }
+                
 
             }
 
