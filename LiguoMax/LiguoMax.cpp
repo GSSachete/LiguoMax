@@ -1,6 +1,42 @@
 
+/*Imagine que você foi contratado para criar um aplicativo de aprendizado de idiomas chamado "LingoMax". O aplicativo deve atender a pessoas que desejam aprender e praticar diferentes idiomas. Os usuários podem selecionar o idioma que desejam aprender e percorrer lições progressivas, incluindo vocabulário, exercícios gramaticais e testes de compreensão.
+
+Para simular a estrutura de arquivos indexados, utilizaremos struct. Sendo assim, você deve:
+
+Criar uma struct chamada Idiomas com as seguintes informações: Codigo, Descricao
+
+Criar uma struct chamada Lições com as seguintes informações: Cod_Licao, Cod_Idioma, Total_Níveis
+
+Criar uma struct chamada Exercícios com as seguintes informações: Cod_Exercicio, Nível_Dificuldade, Descricao, Resposta_Correta, Pontuação
+
+Criar uma struct chamada Usuarios com as seguintes informações: Codigo, Nome, Código do Idioma de Aprendizado, Nível_Atual, Pontuação_Total
+
+1) O programa deverá possuir funções específicas para a inclusão de novos dados nas tabelas, exclusão de dados, leitura exaustiva e reorganização das tabelas.
+
+2) Ao manipular os dados da tabela Lições:
+
+2.1) Ao informar/mostrar Cod_Idioma, o programa deverá exibir a descrição do Idioma
+
+3) Ao manipular os dados da tabela Usuarios:
+
+3.1) Ao informar o Código do Idioma de Aprendizado, o programa deverá exibir a Descrição do Idioma
+
+4) O programa deverá permitir que os usuários pratiquem exercícios:
+
+4.1) Os usuários somente poderão praticar exercícios com Nível de Dificuldade menor ou igual ao seu Nível Atual
+
+4.2) Se o usuário responder o exercício corretamente, o programa deverá somar a Pontuação do exercício na Pontuação_Total do usuário
+
+4.3) Se o usuário errar a resposta do exercício, o programa deverá subtrair 10% do valor da Pontuação do exercício na Pontuação_Total do usuário
+
+4.4) Se o usuário atingir 100 pontos em determinado nível, ele poderá ser promovido ao próximo nível, adicionando uma unidade ao seu Nível_Atual
+
+4.5) Se o usuário atingir o Total de Níveis da Lição, então terá concluído o estudo do idioma e poderá receber o Certificado de Proficiência
+
+5) O programa deverá emitir o ranqueamento dos usuários, de acordo com a Pontuação_Total de cada um.*/
 #include <iostream>
 #include <locale>
+#include <fstream>
 using namespace std;
 struct idiomas {
     int cod_idioma;
@@ -52,18 +88,17 @@ struct usuariosdex {
     int end;
 
 };
-void inseriridioma(idiomas duo [], idiomasdex lingo[], int g, int vet[]) {
+
+void inseriridioma(idiomas idioma [], idiomasdex idiomadex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[2]; 
     cout << "-----------------------CADASTRAR IDIOMA-----------------------"<<endl;
     for (int i = vet[0];i < g; i++) {
         cout << "Por favor informe o código"<<endl;
-        cin >> duo[i].cod_idioma;
+        cin >> idioma[i].cod_idioma;
         cout << "Por favor informe a descrição do idioma"<<endl;
-        cin >> duo[i].desc;
-        cin.ignore();
-        cin.getline(duo[i].desc, 25);
-        duo[i].delet = false;
+        cin >> idioma[i].desc;
+        idioma[i].delet = false;
         vet[0]++;
         cout << "Para caso deseje cadastrar outro idioma digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
@@ -74,18 +109,93 @@ void inseriridioma(idiomas duo [], idiomasdex lingo[], int g, int vet[]) {
     }
 
 }
-void inserirlicao() {
 
+void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
+     system("clear||cls");
+     char fechar[2];
+     cout << "-----------------------CADASTRAR LIÇÃO-----------------------" << endl;
+     for (int i = vet[1];i < g; i++) {
+         cout << "Por favor informe o código" << endl;
+         cin >> licao[i].cod_licao;
+         cout << "Por favor informe o código do idioma" << endl;
+         cin >> licao[i].cod_idioma;
+         cout << "Por favor informe o total do nivel dos niveis de dificuldade desejados" << endl;
+         cin >> licao[i].total_nivel;
+         licao[i].delet = false;
+         vet[0]++;
+         cout << "Para caso deseje cadastrar outra licao digite 's' caso deseje finalizar a operação digite 'n' ";
+         cin >> fechar;
+         if (strcmp(fechar, "n") == 0) {
+             return;
+         }
+
+     }
 }
-void inserirexercicio() {
 
+
+void inserirexercicio(struct exercicios ex[], struct excerciciosdex exdex[], int g, int vet[]) {
+    system("clear||cls");
+    char fechar[2];
+    cout << "-----------------------CADASTRAR EXERCICIO-----------------------" << endl;
+    for (int i = vet[2];i < g; i++) {
+        cout << "Por favor informe o código do exercicio" << endl;
+        cin >> ex[i].cod_exercicio;
+        cout << "Por favor informe o nivel de dificuldade do exercicio" << endl;
+        cin >> ex[i].nivel_dificuldade;
+        cout << "Por favor digite aqui sua pergunta" << endl;
+        cin >> ex[i].perguntas;
+        cout << "Por favor digite a resposta correta para a pergunta anterior" << endl;
+        cin >> ex[i].resposta;
+        cout << "Por favor digite quantos pontos vale essa pergunta" << endl;
+        cin >> ex[i].pontos;
+        ex[i].delet = false;
+        vet[0]++;
+        cout << "Para caso deseje cadastrar outras perguntas digite 's' caso deseje finalizar a operação digite 'n' ";
+        cin >> fechar;
+        if (strcmp(fechar, "n") == 0) {
+            return;
+        }
+
+    }
 }
-void inserirusuario() {
+/*
+struct usuarios {
+    int cod_usuario;
+    char nome[30];
+    int cod_idioma;
+    int nivel_atual;
+    float pontos_total;
+    bool delet;
+};
+*/
+void inserirusuario(struct usuarios usuario [], struct usuariosdex usuariodex[], int g, int vet[]) {
+    system("clear||cls");
+    char fechar[3];
+    cout << "-----------------------CADASTRAR USUARIO-----------------------" << endl;
+    for (int i = vet[2];i < g; i++) {
+        cout << "Por favor informe o código do usuario" << endl;
+        cin >> usuario[i].cod_usuario;
+        cout << "Por favor informe o nome do usuario" << endl;
+        cin >> usuario[i].nome;
+        cout << "Por favor digite o codigo do idioma" << endl;
+        cin >> usuario[i].cod_idioma;
+        cout << "Por favor digite o nivel atual que voce esta" << endl;
+        cin >> usuario[i].nivel_atual;
+        cout << "Por favor digite quantos pontos atuais voce esta" << endl;
+        cin >> usuario[i].pontos_total;
+        usuario[i].delet = false;
+        vet[0]++;
+        cout << "Para caso deseje cadastrar outro usuario digite 's' caso deseje finalizar a operação digite 'n' ";
+        cin >> fechar;
+        if (strcmp(fechar, "n") == 0) {
+            return;
+        }
 
+    }
 }
     int main()
 {
-        setlocale(LC_ALL, "portuguese");
+        setlocale(LC_ALL, "Portuguese_Brazil");
         const int g = 10;
         int vet[4] = { 0 };
         int option = 0;
