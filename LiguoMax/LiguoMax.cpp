@@ -133,7 +133,7 @@ void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
 }
 
 
-void inserirexercicio(struct exercicios ex[], struct excerciciosdex exdex[], int g, int vet[]) {
+void inserirexercicio(exercicios ex[], excerciciosdex exdex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[2];
     cout << "-----------------------CADASTRAR EXERCICIO-----------------------" << endl;
@@ -168,7 +168,7 @@ struct usuarios {
     bool delet;
 };
 */
-void inserirusuario(struct usuarios usuario [], struct usuariosdex usuariodex[], int g, int vet[]) {
+void inserirusuario(usuarios usuario [], struct usuariosdex usuariodex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[3];
     cout << "-----------------------CADASTRAR USUARIO-----------------------" << endl;
@@ -201,6 +201,12 @@ void inserirusuario(struct usuarios usuario [], struct usuariosdex usuariodex[],
         int option = 0;
         idiomas idioma[g];
         idiomasdex idiomadex[g];
+        usuarios usuario[g];
+        usuariosdex usuariodex[g];
+        licoes licao[g];
+        licoesdex licaodex[g];
+        exercicios ex[g];
+        exerciciosdex exdex[g];
         while (true) {
             system("clear||cls");
             cout << "==============DUOLINGO==============" << endl;
@@ -209,17 +215,29 @@ void inserirusuario(struct usuarios usuario [], struct usuariosdex usuariodex[],
             switch (option) {
             case 1:
                 system("clear||cls");
-                cout << "Para cadastrar idioma digite 1"<<endl;
-                cout << "Para sair digite 0"<<endl;
+                cout << "Para cadastrar >idioma< digite 1" << endl;
+                cout << "Para cadastrar >perguntas< digite 2" << endl;
+                cout << "Para cadastrar >respostas< digite 3" << endl;
+                cout << "Para cadastrar >usuarios< digite 4" << endl;
+                cout << "Para sair digite 0" << endl;
                 cin >> option;
                 switch (option) {
                 case 1:
                     inseriridioma(idioma, idiomadex, g, vet);
-                        break;
+                    break;
+                case 2:
+                    inserirlicao(licao, licaodex, g, vet);
+                    break;
+                case 3:
+                    inseriridioma(idioma, idiomadex, g, vet);
+                    break;
+                case 4:
+                    inseriridioma(idioma, idiomadex, g, vet);
+                    break;
                 case 0:
                     break;
-                    }
-                    break;
+                }
+                break;
                 
 
             }
