@@ -94,7 +94,7 @@ void inseriridioma(idiomas idioma [], idiomasdex idiomadex[], int g, int vet[]) 
     char fechar[2]; 
     cout << "-----------------------CADASTRAR IDIOMA-----------------------"<<endl;
     for (int i = vet[0];i < g; i++) {
-        cout << "Por favor informe o código"<<endl;
+        cout << "Por favor informe o codigo"<<endl;
         cin >> idioma[i].cod_idioma;
         cout << "Por favor informe a descrição do idioma"<<endl;
         cin >> idioma[i].desc;
@@ -115,14 +115,14 @@ void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
      char fechar[2];
      cout << "-----------------------CADASTRAR LIÇÃO-----------------------" << endl;
      for (int i = vet[1];i < g; i++) {
-         cout << "Por favor informe o código" << endl;
+         cout << "Por favor informe o codigo" << endl;
          cin >> licao[i].cod_licao;
-         cout << "Por favor informe o código do idioma" << endl;
+         cout << "Por favor informe o codigo do idioma" << endl;
          cin >> licao[i].cod_idioma;
-         cout << "Por favor informe o total do nivel dos niveis de dificuldade desejados" << endl;
+         cout << "Por favor informe o total do nivel" << endl;
          cin >> licao[i].total_nivel;
          licao[i].delet = false;
-         vet[0]++;
+         vet[1]++;
          cout << "Para caso deseje cadastrar outra licao digite 's' caso deseje finalizar a operação digite 'n' ";
          cin >> fechar;
          if (strcmp(fechar, "n") == 0) {
@@ -133,12 +133,12 @@ void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
 }
 
 
-void inserirexercicio(exercicios ex[], excerciciosdex exdex[], int g, int vet[]) {
+void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[2];
     cout << "-----------------------CADASTRAR EXERCICIO-----------------------" << endl;
     for (int i = vet[2];i < g; i++) {
-        cout << "Por favor informe o código do exercicio" << endl;
+        cout << "Por favor informe o codigo do exercicio" << endl;
         cin >> ex[i].cod_exercicio;
         cout << "Por favor informe o nivel de dificuldade do exercicio" << endl;
         cin >> ex[i].nivel_dificuldade;
@@ -149,7 +149,7 @@ void inserirexercicio(exercicios ex[], excerciciosdex exdex[], int g, int vet[])
         cout << "Por favor digite quantos pontos vale essa pergunta" << endl;
         cin >> ex[i].pontos;
         ex[i].delet = false;
-        vet[0]++;
+        vet[2]++;
         cout << "Para caso deseje cadastrar outras perguntas digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
         if (strcmp(fechar, "n") == 0) {
@@ -173,7 +173,7 @@ void inserirusuario(usuarios usuario [], struct usuariosdex usuariodex[], int g,
     char fechar[3];
     cout << "-----------------------CADASTRAR USUARIO-----------------------" << endl;
     for (int i = vet[2];i < g; i++) {
-        cout << "Por favor informe o código do usuario" << endl;
+        cout << "Por favor informe o codigo do usuario" << endl;
         cin >> usuario[i].cod_usuario;
         cout << "Por favor informe o nome do usuario" << endl;
         cin >> usuario[i].nome;
@@ -184,7 +184,7 @@ void inserirusuario(usuarios usuario [], struct usuariosdex usuariodex[], int g,
         cout << "Por favor digite quantos pontos atuais voce esta" << endl;
         cin >> usuario[i].pontos_total;
         usuario[i].delet = false;
-        vet[0]++;
+        vet[3]++;
         cout << "Para caso deseje cadastrar outro usuario digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
         if (strcmp(fechar, "n") == 0) {
@@ -216,8 +216,8 @@ void inserirusuario(usuarios usuario [], struct usuariosdex usuariodex[], int g,
             case 1:
                 system("clear||cls");
                 cout << "Para cadastrar >idioma< digite 1" << endl;
-                cout << "Para cadastrar >perguntas< digite 2" << endl;
-                cout << "Para cadastrar >respostas< digite 3" << endl;
+                cout << "Para cadastrar >liçao< digite 2" << endl;
+                cout << "Para cadastrar >exercicio< digite 3" << endl;
                 cout << "Para cadastrar >usuarios< digite 4" << endl;
                 cout << "Para sair digite 0" << endl;
                 cin >> option;
@@ -229,10 +229,10 @@ void inserirusuario(usuarios usuario [], struct usuariosdex usuariodex[], int g,
                     inserirlicao(licao, licaodex, g, vet);
                     break;
                 case 3:
-                    inseriridioma(idioma, idiomadex, g, vet);
+                    inserirexercicio(ex, exdex, g, vet);
                     break;
                 case 4:
-                    inseriridioma(idioma, idiomadex, g, vet);
+                    inserirusuario(usuario, usuariodex, g, vet);
                     break;
                 case 0:
                     break;
