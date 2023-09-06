@@ -64,8 +64,8 @@ struct licoesdex {
 struct exercicios {
     int cod_exercicio;
     int nivel_dificuldade;
-    char perguntas[30]; 
-    char resposta[30];
+    char perguntas[100]; 
+    char resposta[100];
     float pontos;
     bool delet;
 };
@@ -97,7 +97,8 @@ void inseriridioma(idiomas idioma [], idiomasdex idiomadex[], int g, int vet[]) 
         cout << "Por favor informe o codigo"<<endl;
         cin >> idioma[i].cod_idioma;
         cout << "Por favor informe a descrição do idioma"<<endl;
-        cin >> idioma[i].desc;
+        cin.ignore();
+        cin.getline(idioma[i].desc, 25);
         idioma[i].delet = false;
         vet[0]++;
         cout << "Para caso deseje cadastrar outro idioma digite 's' caso deseje finalizar a operação digite 'n' ";
@@ -143,9 +144,11 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
         cout << "Por favor informe o nivel de dificuldade do exercicio" << endl;
         cin >> ex[i].nivel_dificuldade;
         cout << "Por favor digite aqui sua pergunta" << endl;
-        cin >> ex[i].perguntas;
+        cin.ignore();
+        cin.getline(ex[i].perguntas, 100);
         cout << "Por favor digite a resposta correta para a pergunta anterior" << endl;
-        cin >> ex[i].resposta;
+        cin.ignore();
+        cin.getline(ex[i].resposta, 100);
         cout << "Por favor digite quantos pontos vale essa pergunta" << endl;
         cin >> ex[i].pontos;
         ex[i].delet = false;
