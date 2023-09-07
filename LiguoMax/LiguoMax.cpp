@@ -89,6 +89,15 @@ struct usuariosdex {
 
 };
 
+void idiomaindex(idiomas idioma[], idiomasdex idiomadex[], int i, int vet[]) {
+    int fim = vet[0] - 1;
+    for (; fim >= 0 && idiomadex[fim].cod > idioma[i].cod_idioma; fim--) {
+        idiomadex[fim + 1] = idiomadex[fim];
+    }
+    idiomadex[fim + 1].cod = idioma[i].cod_idioma;
+    idiomadex[fim + 1].end = i;
+}
+
 void inseriridioma(idiomas idioma [], idiomasdex idiomadex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[2]; 
@@ -99,6 +108,7 @@ void inseriridioma(idiomas idioma [], idiomasdex idiomadex[], int g, int vet[]) 
         cout << "Por favor informe a descrição do idioma"<<endl;
         cin.ignore();
         cin.getline(idioma[i].desc, 25);
+        idiomaindex(idioma, idiomadex, i, vet);
         idioma[i].delet = false;
         vet[0]++;
         cout << "Para caso deseje cadastrar outro idioma digite 's' caso deseje finalizar a operação digite 'n' ";
@@ -132,7 +142,9 @@ void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
 
      }
 }
+void licaoindex() {
 
+}
 
 void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) {
     system("clear||cls");
@@ -161,6 +173,10 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
 
     }
 }
+void exercicioindex() {
+
+}
+
 /*
 struct usuarios {
     int cod_usuario;
@@ -195,6 +211,9 @@ void inserirusuario(usuarios usuario [], struct usuariosdex usuariodex[], int g,
         }
 
     }
+}
+void usuarioindex() {
+
 }
     int main()
 {
@@ -237,7 +256,16 @@ void inserirusuario(usuarios usuario [], struct usuariosdex usuariodex[], int g,
                 case 4:
                     inserirusuario(usuario, usuariodex, g, vet);
                     break;
-                case 0:
+                case 5:
+                    for (int i = 0; i < vet[0]; i++) {
+                        cout << idiomadex[i].cod << endl;
+                        cout << idiomadex[i].end << endl;
+                        cout << "=============================0"<<endl;
+                      
+                    }
+                    cin >> option; 
+                    break;
+                  case 0:
                     break;
                 }
                 break;
