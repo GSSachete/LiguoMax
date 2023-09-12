@@ -38,6 +38,12 @@ Criar uma struct chamada Usuarios com as seguintes informações: Codigo, Nome, 
 #include <locale>
 #include <fstream>
 using namespace std;
+/*
+        len[0] -> Idioma
+        len[1] -> Licao
+        len[2] -> Exercicio
+        len[3] -> Usuario
+    */
 struct idiomas {
     int cod_idioma;
     char desc[25];
@@ -120,6 +126,14 @@ void inseriridioma(idiomas idioma [], idiomasdex idiomadex[], int g, int vet[]) 
     }
 
 }
+void licaoindex(licoes licao[], licoesdex licaodex[], int i, int vet[]) {
+    int fim = vet[1] - 1;
+    for (; fim >= 0 && licaodex[fim].cod > licao[i].cod_licao; fim--) {
+        licaodex[fim + 1] = licaodex[fim];
+    }
+    licaodex[fim + 1].cod = licao[i].cod_licao;
+    licaodex[fim + 1].end = i;
+}
 
 void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
      system("clear||cls");
@@ -132,6 +146,7 @@ void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
          cin >> licao[i].cod_idioma;
          cout << "Por favor informe o total do nivel" << endl;
          cin >> licao[i].total_nivel;
+         licaoindex(licao, licaodex, i, vet);
          licao[i].delet = false;
          vet[1]++;
          cout << "Para caso deseje cadastrar outra licao digite 's' caso deseje finalizar a operação digite 'n' ";
@@ -142,9 +157,7 @@ void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
 
      }
 }
-void licaoindex() {
 
-}
 
 void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) {
     system("clear||cls");
@@ -163,6 +176,7 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
         cin.getline(ex[i].resposta, 100);
         cout << "Por favor digite quantos pontos vale essa pergunta" << endl;
         cin >> ex[i].pontos;
+       // licaoindex(idioma, idiomadex, i, vet);
         ex[i].delet = false;
         vet[2]++;
         cout << "Para caso deseje cadastrar outras perguntas digite 's' caso deseje finalizar a operação digite 'n' ";
@@ -257,11 +271,14 @@ void usuarioindex() {
                     inserirusuario(usuario, usuariodex, g, vet);
                     break;
                 case 5:
-                    for (int i = 0; i < vet[0]; i++) {
-                        cout << idiomadex[i].cod << endl;
+                    for (int i = 0; i < vet[1]; i++) {
+                        /*cout << idiomadex[i].cod << endl;
                         cout << idiomadex[i].end << endl;
-                        cout << "=============================0"<<endl;
-                      
+                        cout << "============================="<<endl;
+                        */
+                        cout << licaodex[i].cod << endl;
+                        cout << licaodex[i].end << endl;
+                        cout << "=============================" << endl;
                     }
                     cin >> option; 
                     break;
