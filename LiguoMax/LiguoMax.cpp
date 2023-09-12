@@ -1,4 +1,5 @@
 
+
 /*Imagine que você foi contratado para criar um aplicativo de aprendizado de idiomas chamado "LingoMax". O aplicativo deve atender a pessoas que desejam aprender e praticar diferentes idiomas. Os usuários podem selecionar o idioma que desejam aprender e percorrer lições progressivas, incluindo vocabulário, exercícios gramaticais e testes de compreensão.
 
 Para simular a estrutura de arquivos indexados, utilizaremos struct. Sendo assim, você deve:
@@ -34,16 +35,13 @@ Criar uma struct chamada Usuarios com as seguintes informações: Codigo, Nome, 
 4.5) Se o usuário atingir o Total de Níveis da Lição, então terá concluído o estudo do idioma e poderá receber o Certificado de Proficiência
 
 5) O programa deverá emitir o ranqueamento dos usuários, de acordo com a Pontuação_Total de cada um.*/
-#include <iostream>
-#include <locale>
-#include <fstream>
-using namespace std;
-/*
-        len[0] -> Idioma
-        len[1] -> Licao
-        len[2] -> Exercicio
-        len[3] -> Usuario
-    */
+
+#include<iostream>
+#include<locale>
+#include<fstream>
+
+using namespace std; 
+
 struct idiomas {
     int cod_idioma;
     char desc[25];
@@ -94,6 +92,12 @@ struct usuariosdex {
     int end;
 
 };
+/*
+        len[0] -> Idioma
+        len[1] -> Licao
+        len[2] -> Exercicio
+        len[3] -> Usuario
+    */
 
 void idiomaindex(idiomas idioma[], idiomasdex idiomadex[], int i, int vet[]) {
     int fim = vet[0] - 1;
@@ -158,6 +162,14 @@ void inserirlicao(licoes licao [], licoesdex licaodex [], int g, int vet []){
      }
 }
 
+void licaoindex(exercicios ex[], exerciciosdex exdex[], int i, int vet[]) {
+    int fim = vet[2] - 1;
+    for (; fim >= 0 && exdex[fim].cod > ex[i].cod_exercicio; fim--) {
+        exdex[fim + 1] = exdex[fim];
+    }
+    exdex[fim + 1].cod = ex[i].cod_exercicio;
+    exdex[fim + 1].end = i;
+}
 
 void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) {
     system("clear||cls");
@@ -176,7 +188,7 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
         cin.getline(ex[i].resposta, 100);
         cout << "Por favor digite quantos pontos vale essa pergunta" << endl;
         cin >> ex[i].pontos;
-       // licaoindex(idioma, idiomadex, i, vet);
+       licaoindex(idioma, idiomadex, i, vet);
         ex[i].delet = false;
         vet[2]++;
         cout << "Para caso deseje cadastrar outras perguntas digite 's' caso deseje finalizar a operação digite 'n' ";
@@ -187,8 +199,13 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
 
     }
 }
-void exercicioindex() {
-
+void licaoindex(usuarios usuario[], struct usuariosdex usuariodex[], int i, int vet[])) {
+    int fim = vet[2] - 1;
+    for (; fim >= 0 && usuariodex[fim].cod > usuario[i].cod_usuario; fim--) {
+        usuariodex[fim + 1] = usuariodex[fim];
+    }
+    usuariodex[fim + 1].cod = usuario[i].cod_usuario;
+    usuariodex[fim + 1].end = i;
 }
 
 /*
