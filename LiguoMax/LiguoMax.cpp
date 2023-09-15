@@ -64,8 +64,8 @@ struct licoesdex {
 struct exercicios {
     int cod_exercicio;
     int nivel_dificuldade;
-    char perguntas[30];
-    char resposta[30];
+    char perguntas[75];
+    char resposta[75];
     float pontos;
     int status;
 };
@@ -104,10 +104,11 @@ void inseriridioma(idiomas idioma[], idiomasdex idiomadex[], int g, int vet[]) {
     char fechar[2];
     cout << "-----------------------CADASTRAR IDIOMA-----------------------" << endl;
     for (int i = vet[0];i < g; i++) {
-        cout << "Por favor informe o codigo" << endl;
+        cout << "Por favor informe o código" << endl;
         cin >> idioma[i].cod_idioma;
         cout << "Por favor informe a descrição do idioma" << endl;
-        cin >> idioma[i].desc;
+        cin.ignore();
+        cin.getline(idioma[i].desc, 25);
         idiomaindex(idioma, idiomadex, i, vet);
         idioma[i].status = 0;
         vet[0]++;
@@ -120,28 +121,25 @@ void inseriridioma(idiomas idioma[], idiomasdex idiomadex[], int g, int vet[]) {
     }
 
 }
-/*struct idiomas {
-    int cod_idioma;
-    char desc[25];
-    bool delet;
-
-};
-struct idiomasdex {
-    int cod;
-    int end;
-
-};
-*/
 void exaustivaidioma(struct idiomas idioma[], idiomasdex idiomadex[],  int vet[]) {
+    system("clear||cls");
+    cout << "=====================DUOLINGO=====================" << endl;
+    cout << endl;
+    cout << "------------LISTA DE IDIOMAS CADASTRADOS------------" << endl;
+    cout << endl;
     for (int k = 0; k < vet[0]; k++) {
         int i = idiomadex[k].end;
         if (idioma[i].status == 0) {
-            cout << "\nCodigo: " << idioma[i].cod_idioma;
-            cout << "\tDesc: " << idioma[i].desc;
+            cout << "\nCódigo: " << idioma[i].cod_idioma;
+            cout << "\tDescrição: " << idioma[i].desc;
            
         }
     }
 }
+
+
+
+
 
 //LICAO
 void licaoindex(licoes licao[], licoesdex licaodex[], int i, int vet[]) {
@@ -161,7 +159,7 @@ void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[]) {
         cin >> licao[i].cod_licao;
         cout << "Por favor informe o codigo do idioma" << endl;
         cin >> licao[i].cod_idioma;
-        cout << "Por favor informe o total do nivel" << endl;
+        cout << "Por favor informe o total do nível" << endl;
         cin >> licao[i].total_nivel;
         licaoindex(licao, licaodex, i, vet);
         licao[i].status = false;
@@ -174,16 +172,12 @@ void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[]) {
 
     }
 }
-/*
-struct licoes {
-    int cod_licao;
-    int cod_idioma;
-    int total_nivel;
-    int status;
-
-};
-*/
 void exaustivalicao(licoes licao[], licoesdex licaodex[], int vet[]) {
+    system("clear||cls");
+    cout << "======================DUOLINGO======================" << endl;
+    cout << endl;
+    cout << "-------------LISTA DE LIÇÕES CADASTRADAS-------------" << endl;
+    cout << endl;
     for (int k = 0; k < vet[1]; k++) {
         int i = licaodex[k].end;
         if (licao[i].status == 0) {
@@ -195,7 +189,11 @@ void exaustivalicao(licoes licao[], licoesdex licaodex[], int vet[]) {
     }
 }
 
-//exercicio
+
+
+
+
+//EXERCÍCIO
 void exindex(exercicios ex[], exerciciosdex exdex[], int i, int vet[]) {
     int fim = vet[2] - 1;
     for (; fim >= 0 && exdex[fim].cod > ex[i].cod_exercicio; fim--) { //3 maior que 1 entao entra no for
@@ -207,16 +205,21 @@ void exindex(exercicios ex[], exerciciosdex exdex[], int i, int vet[]) {
 void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[2];
+    cout << "============================DUOLINGO============================" << endl;
+    cout << endl;
     cout << "-----------------------CADASTRAR EXERCICIO-----------------------" << endl;
+    cout << endl;
     for (int i = vet[2];i < g; i++) {
-        cout << "Por favor informe o codigo do exercicio" << endl;
+        cout << "Por favor informe o codigo do exercício" << endl;
         cin >> ex[i].cod_exercicio;
-        cout << "Por favor informe o nivel de dificuldade do exercicio" << endl;
+        cout << "Por favor informe o nível de dificuldade do exercício" << endl;
         cin >> ex[i].nivel_dificuldade;
         cout << "Por favor digite aqui sua pergunta" << endl;
-        cin >> ex[i].perguntas;
+        cin.ignore();
+        cin.getline(ex[i].perguntas, 75);
         cout << "Por favor digite a resposta correta para a pergunta anterior" << endl;
-        cin >> ex[i].resposta;
+        cin.ignore();
+        cin.getline(ex[i].resposta, 75);
         cout << "Por favor digite quantos pontos vale essa pergunta" << endl;
         cin >> ex[i].pontos;
         exindex(ex, exdex, i, vet);
@@ -230,14 +233,18 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
 
     }
 }
-
 void exaustivaex(exercicios ex[], exerciciosdex exdex[], int vet[]) {
+    system("clear||cls");
+   cout << "===================DUOLINGO===================" << endl;
+   cout << endl;
+   cout << "----------LISTA DE EXERCÍCIOS CADASTRADOS----------" << endl;
+   cout << endl;
     for (int k = 0; k < vet[2]; k++) {
         int i = exdex[k].end;
 
            if (ex[i].status == 0) {
-            cout << "\nCodigo do exercicio: " << ex[i].cod_exercicio;
-            cout << "\tO nivel da dificuldade é: " << ex[i].nivel_dificuldade;
+            cout << "\nCodigo do exercício: " << ex[i].cod_exercicio;
+            cout << "\tO nível da dificuldade é: " << ex[i].nivel_dificuldade;
             cout << endl;
             cout << "A pergunta é: " << ex[i].perguntas;
             cout << endl;
@@ -249,8 +256,12 @@ void exaustivaex(exercicios ex[], exerciciosdex exdex[], int vet[]) {
         }
     }
 }
-//usuario
 
+
+
+
+
+//USUÁRIO
 void usuarioindex(usuarios usuario[],  usuariosdex usuariodex[], int i, int vet[]) {
     int fim = vet[2] - 1;
     for (; fim >= 0 && usuariodex[fim].cod > usuario[i].cod_usuario; fim--) {
@@ -264,20 +275,20 @@ void inserirusuario(usuarios usuario[],  usuariosdex usuariodex[], int g, int ve
     char fechar[3];
     cout << "-----------------------CADASTRAR USUARIO-----------------------" << endl;
     for (int i = vet[2];i < g; i++) {
-        cout << "Por favor informe o codigo do usuario" << endl;
+        cout << "Por favor informe o codigo do usuário" << endl;
         cin >> usuario[i].cod_usuario;
-        cout << "Por favor informe o nome do usuario" << endl;
+        cout << "Por favor informe o nome do usuário" << endl;
         cin >> usuario[i].nome;
         cout << "Por favor digite o codigo do idioma" << endl;
         cin >> usuario[i].cod_idioma;
-        cout << "Por favor digite o nivel atual que voce esta" << endl;
+        cout << "Por favor digite o nível atual que voce esta" << endl;
         cin >> usuario[i].nivel_atual;
         cout << "Por favor digite quantos pontos atuais voce esta" << endl;
         cin >> usuario[i].pontos_total;
         usuarioindex(usuario, usuariodex, i, vet);
         usuario[i].status = 0;
         vet[3]++;
-        cout << "Para caso deseje cadastrar outro usuario digite 's' caso deseje finalizar a operação digite 'n' ";
+        cout << "Para caso deseje cadastrar outro usuário digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
         if (strcmp(fechar, "n") == 0) {
             return;
@@ -286,15 +297,20 @@ void inserirusuario(usuarios usuario[],  usuariosdex usuariodex[], int g, int ve
     }
 }
 void exaustivausuario(usuarios usuario[], usuariosdex usuariodex[], int vet[]) {
+    system("clear||cls");
+    cout << "====================DUOLINGO====================" << endl;
+    cout << endl;
+    cout << "----------LISTA DE USUÁRIOS CADASTRADOS----------" << endl;
+    cout << endl;
     for (int k = 0; k < vet[3]; k++) {
         int i = usuariodex[k].end;
         if (usuario[i].status == 0) {
-            cout << "\nCodigo do usuario: " << usuario[i].cod_usuario;
-            cout << "\tNome do usuario: " << usuario[i].nome;
+            cout << "\nCódigo do usuário: " << usuario[i].cod_usuario;
+            cout << "\tNome do usuário: " << usuario[i].nome;
             cout << endl;
             cout << "O codigo do idioma: " << usuario[i].cod_idioma;
             cout << endl;
-            cout << "O nivel atual: " << usuario[i].nivel_atual;
+            cout << "O nível atual: " << usuario[i].nivel_atual;
             cout << endl;
             cout << "A quantidade de pontos atuais: : " << usuario[i].pontos_total;
             cout << endl;
@@ -303,13 +319,16 @@ void exaustivausuario(usuarios usuario[], usuariosdex usuariodex[], int vet[]) {
     }
 }
 
+
+//MENU
 int main()
 {
-    setlocale(LC_ALL, "Portuguese_Brazil");
+    setlocale(LC_ALL, "pt_BR.UTF-8");
     const int g = 10;
     int vet[4] = { 0 };
     int option = 0;
-    idiomas idioma[g];
+    int pausa;
+       idiomas idioma[g];
     idiomasdex idiomadex[g];
     usuarios usuario[g];
     usuariosdex usuariodex[g];
@@ -325,11 +344,12 @@ int main()
         cin >> option;
         switch (option) {
         case 1:
-            system("clear||cls");
-            cout << "Para cadastrar >idioma< digite 1" << endl;
-            cout << "Para cadastrar >liçao< digite 2" << endl;
-            cout << "Para cadastrar >exercicio< digite 3" << endl;
-            cout << "Para cadastrar >usuarios< digite 4" << endl;
+            cout << endl;
+            cout << "=============Cadastros=============" << endl;
+            cout << "Para cadastrar >Idioma< digite 1" << endl;
+            cout << "Para cadastrar >Lição< digite 2" << endl;
+            cout << "Para cadastrar >Exercício< digite 3" << endl;
+            cout << "Para cadastrar >Usuários< digite 4" << endl;
             cout << "Para sair digite 0" << endl;
             cin >> option;
             switch (option) {
@@ -365,31 +385,44 @@ int main()
             }
             break;
         case 2:
-            cout << "=============LISTAGEM DE INFOS=================" << endl;;
+            cout << endl;
+            cout << endl; 
+            cout << "==========LISTAGEM DE INFOS==========" << endl;;
             cout << "PARA LISTAR >IDIOMA< DIGITE 1" << endl;
-            cout << "PARA LISTAR >LICAO< DIGITE 2" << endl;
-            cout << "PARA LISTAR >EXERCICIO< DIGITE 3" << endl;
-            cout << "PARA LISTAR >USUARIO< DIGITE 4" << endl;
+            cout << "PARA LISTAR >LIÇÃO< DIGITE 2" << endl;
+            cout << "PARA LISTAR >EXERCÍCIO< DIGITE 3" << endl;
+            cout << "PARA LISTAR >USUÁRIO< DIGITE 4" << endl;
+            cout << "Para sair digite 0" << endl; 
             cin >> option;
             switch (option) {
             case 1:
                 exaustivaidioma(idioma, idiomadex, vet);
+                cin >> pausa;
                 break;
+               
             case 2:
                 exaustivalicao(licao, licaodex, vet);
-                cin >> option; 
+                cin >> pausa;
                 break;
+                
             case 3:
                 exaustivaex(ex, exdex, vet);
-                cin >> option;
+                cin >> pausa;
                 break;
+                
             case 4:
                 exaustivausuario(usuario, usuariodex, vet);
-                cin >> option;
-                break;
+                cin >> pausa;
+                 break;
+              
+            case 0:
+                 break;
             }
-      
+    
+
             break;
+       
+
         }
     }; //fim do switch
 
@@ -401,7 +434,8 @@ int main()
 
 
 
-
+//fazer tecla pra sair
+//cor
 
 
 
