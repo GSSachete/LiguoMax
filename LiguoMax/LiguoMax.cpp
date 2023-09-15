@@ -41,7 +41,7 @@ using namespace std;
 struct idiomas {
     int cod_idioma;
     char desc[25];
-    bool delet;
+    int status;
 
 };
 struct idiomasdex {
@@ -109,7 +109,7 @@ void inseriridioma(idiomas idioma[], idiomasdex idiomadex[], int g, int vet[]) {
         cout << "Por favor informe a descrição do idioma" << endl;
         cin >> idioma[i].desc;
         idiomaindex(idioma, idiomadex, i, vet);
-        idioma[i].delet = false;
+        idioma[i].status = 0;
         vet[0]++;
         cout << "Para caso deseje cadastrar outro idioma digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
@@ -120,7 +120,28 @@ void inseriridioma(idiomas idioma[], idiomasdex idiomadex[], int g, int vet[]) {
     }
 
 }
+/*struct idiomas {
+    int cod_idioma;
+    char desc[25];
+    bool delet;
 
+};
+struct idiomasdex {
+    int cod;
+    int end;
+
+};
+*/
+void exaustivaidioma(struct idiomas idioma[], idiomasdex idiomadex[],  int vet[]) {
+    for (int k = 0; k < vet[0]; k++) {
+        int i = idiomadex[k].end;
+        if (idioma[i].status == 0) {
+            cout << "\nCodigo: " << idioma[i].cod_idioma;
+            cout << "\tDesc: " << idioma[i].desc;
+           
+        }
+    }
+}
 
 //LICAO
 void licaoindex(licoes licao[], licoesdex licaodex[], int i, int vet[]) {
@@ -254,6 +275,7 @@ int main()
         system("clear||cls");
         cout << "==============DUOLINGO==============" << endl;
         cout << "Para cadastrar algo digite 1" << endl;
+        cout << "Para listagem de infos digite 2" << endl;
         cin >> option;
         switch (option) {
         case 1:
@@ -277,30 +299,40 @@ int main()
             case 4:
                 inserirusuario(usuario, usuariodex, g, vet);
                 break;
+                /*
             case 5:
                 for (int i = 0; i < vet[1]; i++) {
                     cout << idiomadex[i].cod << endl;
                     cout << idiomadex[i].end << endl;
                     cout << "============================="<<endl;
-                    /*
+
                     cout << licaodex[i].cod << endl;
                     cout << licaodex[i].end << endl;
                     cout << "=============================" << endl;
-                    */
+
                 }
                 cin >> option;
                 break;
+                 */
             case 0:
                 break;
             }
             break;
-
-
+        case 2:
+            cout << "=============LISTAGEM DE INFOS=================" << endl;;
+            cout << "PARA LISTAR >IDIOMA< DIGITE 1" << endl;;
+            cin >> option;
+            switch (option) {
+            case 1:
+                exaustivaidioma(idioma, idiomadex, vet);
+                cin >> option;
+                break;
+            }
+            break;
         }
+    }; //fim do switch
 
-    };
-
-}
+} //fim do main
 
 
 
