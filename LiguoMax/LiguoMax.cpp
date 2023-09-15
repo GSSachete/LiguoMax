@@ -37,7 +37,15 @@ Criar uma struct chamada Usuarios com as seguintes informações: Codigo, Nome, 
 #include <iostream>
 #include <locale>
 #include <fstream>
+#include <stdio.h>
+#include <windows.h>
+
+
 using namespace std;
+#define VERMELHO     "\x1b[31m"
+#define VERDE   "\x1b[32m"
+#define AZUL    "\x1b[34m"
+#define RESET   "\x1b[0m"
 struct idiomas {
     int cod_idioma;
     char desc[25];
@@ -304,7 +312,7 @@ void exaustivausuario(usuarios usuario[], usuariosdex usuariodex[], int vet[]) {
 }
 
 int main()
-{
+{ 
     setlocale(LC_ALL, "Portuguese_Brazil");
     const int g = 10;
     int vet[4] = { 0 };
@@ -320,6 +328,7 @@ int main()
     while (true) {
         system("clear||cls");
         cout << "==============DUOLINGO==============" << endl;
+        //printf(VERDE"==============DUOLINGO==============" RESET "\n");
         cout << "Para cadastrar algo digite 1" << endl;
         cout << "Para listagem de infos digite 2" << endl;
         cin >> option;
@@ -365,7 +374,8 @@ int main()
             }
             break;
         case 2:
-            cout << "=============LISTAGEM DE INFOS=================" << endl;;
+            //printf(VERDE"=============LISTAGEM DE INFOS=================" RESET "\n");
+            cout<<"=============LISTAGEM DE INFORMAÇÕES================="<<endl;
             cout << "PARA LISTAR >IDIOMA< DIGITE 1" << endl;
             cout << "PARA LISTAR >LICAO< DIGITE 2" << endl;
             cout << "PARA LISTAR >EXERCICIO< DIGITE 3" << endl;
@@ -392,12 +402,16 @@ int main()
             break;
         }
     }; //fim do switch
-
+   // return 0;//console
 } //fim do main
 
 
 
-
+/*
+inicio int main(console
+ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
+    */
 
 
 
