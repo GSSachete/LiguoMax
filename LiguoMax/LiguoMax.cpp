@@ -53,7 +53,7 @@ struct licoes {
     int cod_licao;
     int cod_idioma;
     int total_nivel;
-    bool delet;
+    int status;
 
 };
 struct licoesdex {
@@ -67,7 +67,7 @@ struct exercicios {
     char perguntas[30];
     char resposta[30];
     float pontos;
-    bool delet;
+    int status;
 };
 struct exerciciosdex {
     int cod;
@@ -81,7 +81,7 @@ struct usuarios {
     int cod_idioma;
     int nivel_atual;
     float pontos_total;
-    bool delet;
+    int status;
 };
 struct usuariosdex {
     int cod;
@@ -164,7 +164,7 @@ void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[]) {
         cout << "Por favor informe o total do nivel" << endl;
         cin >> licao[i].total_nivel;
         licaoindex(licao, licaodex, i, vet);
-        licao[i].delet = false;
+        licao[i].status = false;
         vet[1]++;
         cout << "Para caso deseje cadastrar outra licao digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
@@ -174,15 +174,34 @@ void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[]) {
 
     }
 }
+/*
+struct licoes {
+    int cod_licao;
+    int cod_idioma;
+    int total_nivel;
+    int status;
 
+};
+*/
+void exaustivalicao(licoes licao[], licoesdex licaodex[], int vet[]) {
+    for (int k = 0; k < vet[1]; k++) {
+        int i = licaodex[k].end;
+        if (licao[i].status == 0) {
+            cout << "\nCodigo da Licao: " << licao[i].cod_licao;
+            cout << "\tCodigo do Idioma: " << licao[i].cod_idioma;
+            cout << endl;
+            cout << "Totais de niveis da licao: " << licao[i].total_nivel;
+        }
+    }
+}
 
 //exercicio
 void exindex(exercicios ex[], exerciciosdex exdex[], int i, int vet[]) {
     int fim = vet[2] - 1;
-    for (; fim >= 0 && exdex[fim].cod > ex[i].cod_exercicio; fim--) {
+    for (; fim >= 0 && exdex[fim].cod > ex[i].cod_exercicio; fim--) { //3 maior que 1 entao entra no for
         exdex[fim + 1] = exdex[fim];
     }
-    exdex[fim + 1].cod = ex[i].cod_exercicio;
+    exdex[fim + 1].cod = ex[i].cod_exercicio; //caso nao seja vai receber o atual maior 
     exdex[fim + 1].end = i;
 }
 void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) {
@@ -201,7 +220,7 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
         cout << "Por favor digite quantos pontos vale essa pergunta" << endl;
         cin >> ex[i].pontos;
         exindex(ex, exdex, i, vet);
-        ex[i].delet = false;
+        ex[i].status = 0;
         vet[2]++;
         cout << "Para caso deseje cadastrar outras perguntas digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
@@ -211,18 +230,27 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
 
     }
 }
-/*
-struct usuarios {
-    int cod_usuario;
-    char nome[30];
-    int cod_idioma;
-    int nivel_atual;
-    float pontos_total;
-    bool delet;
-};
-*/
 
+void exaustivaex(exercicios ex[], exerciciosdex exdex[], int vet[]) {
+    for (int k = 0; k < vet[2]; k++) {
+        int i = exdex[k].end;
+
+           if (ex[i].status == 0) {
+            cout << "\nCodigo do exercicio: " << ex[i].cod_exercicio;
+            cout << "\tO nivel da dificuldade é: " << ex[i].nivel_dificuldade;
+            cout << endl;
+            cout << "A pergunta é: " << ex[i].perguntas;
+            cout << endl;
+            cout << "A resposta é: " << ex[i].resposta;
+            cout << endl;
+            cout << "A quantidade de pontos que vale essa pergunta é : " << ex[i].pontos;
+            cout << endl;
+
+        }
+    }
+}
 //usuario
+
 void usuarioindex(usuarios usuario[],  usuariosdex usuariodex[], int i, int vet[]) {
     int fim = vet[2] - 1;
     for (; fim >= 0 && usuariodex[fim].cod > usuario[i].cod_usuario; fim--) {
@@ -247,7 +275,7 @@ void inserirusuario(usuarios usuario[],  usuariosdex usuariodex[], int g, int ve
         cout << "Por favor digite quantos pontos atuais voce esta" << endl;
         cin >> usuario[i].pontos_total;
         usuarioindex(usuario, usuariodex, i, vet);
-        usuario[i].delet = false;
+        usuario[i].status = 0;
         vet[3]++;
         cout << "Para caso deseje cadastrar outro usuario digite 's' caso deseje finalizar a operação digite 'n' ";
         cin >> fechar;
@@ -257,6 +285,24 @@ void inserirusuario(usuarios usuario[],  usuariosdex usuariodex[], int g, int ve
 
     }
 }
+void exaustivausuario(usuarios usuario[], usuariosdex usuariodex[], int vet[]) {
+    for (int k = 0; k < vet[3]; k++) {
+        int i = usuariodex[k].end;
+        if (usuario[i].status == 0) {
+            cout << "\nCodigo do usuario: " << usuario[i].cod_usuario;
+            cout << "\tNome do usuario: " << usuario[i].nome;
+            cout << endl;
+            cout << "O codigo do idioma: " << usuario[i].cod_idioma;
+            cout << endl;
+            cout << "O nivel atual: " << usuario[i].nivel_atual;
+            cout << endl;
+            cout << "A quantidade de pontos atuais: : " << usuario[i].pontos_total;
+            cout << endl;
+
+        }
+    }
+}
+
 int main()
 {
     setlocale(LC_ALL, "Portuguese_Brazil");
@@ -320,14 +366,29 @@ int main()
             break;
         case 2:
             cout << "=============LISTAGEM DE INFOS=================" << endl;;
-            cout << "PARA LISTAR >IDIOMA< DIGITE 1" << endl;;
+            cout << "PARA LISTAR >IDIOMA< DIGITE 1" << endl;
+            cout << "PARA LISTAR >LICAO< DIGITE 2" << endl;
+            cout << "PARA LISTAR >EXERCICIO< DIGITE 3" << endl;
+            cout << "PARA LISTAR >USUARIO< DIGITE 4" << endl;
             cin >> option;
             switch (option) {
             case 1:
                 exaustivaidioma(idioma, idiomadex, vet);
+                break;
+            case 2:
+                exaustivalicao(licao, licaodex, vet);
+                cin >> option; 
+                break;
+            case 3:
+                exaustivaex(ex, exdex, vet);
+                cin >> option;
+                break;
+            case 4:
+                exaustivausuario(usuario, usuariodex, vet);
                 cin >> option;
                 break;
             }
+      
             break;
         }
     }; //fim do switch
