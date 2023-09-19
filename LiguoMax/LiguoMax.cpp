@@ -39,6 +39,9 @@ Criar uma struct chamada Usuarios com as seguintes informações: Codigo, Nome, 
 #include <fstream>
 #include <stdio.h>
 #include <windows.h>
+//#include <stdio.h>
+//#include <conio.h>
+//#include <stdlib.h>
 
 
 using namespace std;
@@ -110,7 +113,8 @@ void idiomaindex(idiomas idioma[], idiomasdex idiomadex[], int i, int vet[]) {
 void inseriridioma(idiomas idioma[], idiomasdex idiomadex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[2];
-    cout << "-----------------------CADASTRAR IDIOMA-----------------------" << endl;
+    printf(VERDE"-----------------------CADASTRAR IDIOMA-----------------------" RESET "\n");
+    //cout << "-----------------------CADASTRAR IDIOMA-----------------------" << endl;
     for (int i = vet[0];i < g; i++) {
         cout << "Por favor informe o codigo" << endl;
         cin >> idioma[i].cod_idioma;
@@ -163,7 +167,8 @@ void licaoindex(licoes licao[], licoesdex licaodex[], int i, int vet[]) {
 void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[2];
-    cout << "-----------------------CADASTRAR LIÇÃO-----------------------" << endl;
+    printf(VERDE"-----------------------CADASTRAR LIÇÃO-----------------------" RESET "\n");
+    //cout << "-----------------------CADASTRAR LIÇÃO-----------------------" << endl;
     for (int i = vet[1];i < g; i++) {
         cout << "Por favor informe o codigo" << endl;
         cin >> licao[i].cod_licao;
@@ -215,7 +220,8 @@ void exindex(exercicios ex[], exerciciosdex exdex[], int i, int vet[]) {
 void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[2];
-    cout << "-----------------------CADASTRAR EXERCICIO-----------------------" << endl;
+    printf(VERDE"-----------------------CADASTRAR EXERCICIO-----------------------" RESET "\n");
+   // cout << "-----------------------CADASTRAR EXERCICIO-----------------------" << endl;
     for (int i = vet[2];i < g; i++) {
         cout << "Por favor informe o codigo do exercicio" << endl;
         cin >> ex[i].cod_exercicio;
@@ -270,7 +276,8 @@ void usuarioindex(usuarios usuario[],  usuariosdex usuariodex[], int i, int vet[
 void inserirusuario(usuarios usuario[],  usuariosdex usuariodex[], int g, int vet[]) {
     system("clear||cls");
     char fechar[3];
-    cout << "-----------------------CADASTRAR USUARIO-----------------------" << endl;
+    printf(VERDE"-----------------------CADASTRAR USUARIO-----------------------" RESET "\n");
+   // cout << "-----------------------CADASTRAR USUARIO-----------------------" << endl;
     for (int i = vet[2];i < g; i++) {
         cout << "Por favor informe o codigo do usuario" << endl;
         cin >> usuario[i].cod_usuario;
@@ -317,6 +324,7 @@ int main()
     const int g = 10;
     int vet[4] = { 0 };
     int option = 0;
+    //char op;
     idiomas idioma[g];
     idiomasdex idiomadex[g];
     usuarios usuario[g];
@@ -327,14 +335,16 @@ int main()
     exerciciosdex exdex[g];
     while (true) {
         system("clear||cls");
-        cout << "==============DUOLINGO==============" << endl;
-        //printf(VERDE"==============DUOLINGO==============" RESET "\n");
+        //cout << "==============DUOLINGO==============" << endl;
+        printf(VERDE"==============SALINGO==============" RESET "\n");
         cout << "Para cadastrar algo digite 1" << endl;
         cout << "Para listagem de infos digite 2" << endl;
-        cin >> option;
+        //op = getchar();
+        cin >> option; 
         switch (option) {
         case 1:
             system("clear||cls");
+            printf(VERDE"==============SALINGO==============" RESET "\n");
             cout << "Para cadastrar >idioma< digite 1" << endl;
             cout << "Para cadastrar >liçao< digite 2" << endl;
             cout << "Para cadastrar >exercicio< digite 3" << endl;
@@ -369,18 +379,20 @@ int main()
                 cin >> option;
                 break;
                  */
-            case 0:
-                break;
+            case 27:
+                system("exit");
+                    break;
             }
             break;
         case 2:
-            //printf(VERDE"=============LISTAGEM DE INFOS=================" RESET "\n");
-            cout<<"=============LISTAGEM DE INFORMAÇÕES================="<<endl;
+            printf(VERDE"=============LISTAGEM DE INFOS=================" RESET "\n");
+            //cout<<"=============LISTAGEM DE INFORMAÇÕES================="<<endl;
             cout << "PARA LISTAR >IDIOMA< DIGITE 1" << endl;
             cout << "PARA LISTAR >LICAO< DIGITE 2" << endl;
             cout << "PARA LISTAR >EXERCICIO< DIGITE 3" << endl;
             cout << "PARA LISTAR >USUARIO< DIGITE 4" << endl;
             cin >> option;
+
             switch (option) {
             case 1:
                 exaustivaidioma(idioma, idiomadex, vet);
