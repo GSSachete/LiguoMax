@@ -144,6 +144,29 @@ void exaustivaidioma(struct idiomas idioma[], idiomasdex idiomadex[], int vet[])
         }
     }
 }
+void buscaaleat(struct idiomasdex idiomadex[],  idiomas idioma[], int vet[]) {
+    int cod;
+    cout << "qual código você deseja excluir";
+    cin >> cod;
+    int i = 0, f = vet[0];
+    int m = (i + f) / 2;
+    for (; f >= i && cod != idiomadex[m].cod; m = (i + f) / 2) {
+        if (cod > idiomadex[m].cod)
+            i = m + 1;
+        else
+            f = m - 1;
+    }
+    i = idiomadex[m].end;
+    if ((cod == idiomadex[m].cod) && idioma[i].status == 0) {
+        idioma[i].status = 1;
+        cout << "\n\n Cliente Excluido com Sucesso";
+    }
+    else
+        cout << "Cliente nao cadastrado";
+   
+}
+
+
 
 //LICAO
 void licaoindex(licoes licao[], licoesdex licaodex[], int i, int vet[]) {
@@ -202,6 +225,11 @@ void exaustivalicao(licoes licao[], licoesdex licaodex[], int vet[]) {
     }
 }
 
+
+
+
+
+
 //exercicio
 void exindex(exercicios ex[], exerciciosdex exdex[], int i, int vet[]) {
     int fim = vet[2] - 1;
@@ -238,7 +266,6 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
 
     }
 }
-
 void exaustivaex(exercicios ex[], exerciciosdex exdex[], int vet[]) {
     printf(VERDE"-----------------------LISTAGEM EXERCÍCIO-----------------------" RESET "\n");
     cout << endl;
@@ -260,6 +287,7 @@ void exaustivaex(exercicios ex[], exerciciosdex exdex[], int vet[]) {
         }
     }
 }
+
 
 
 
@@ -322,9 +350,14 @@ void exaustivausuario(usuarios usuario[], usuariosdex usuariodex[], int vet[]) {
     }
 }
 
+
+
+
+
+//menu
 int main()
 {
-    setlocale(LC_ALL, "Portuguese_Brazil");
+    setlocale(LC_ALL, "pt_BR.UTF-8");
     const int g = 10;
     int vet[4] = { 0 };
     int option = 0;
@@ -343,7 +376,7 @@ int main()
         //cout << "==============DUOLINGO==============" << endl;
         printf(VERDE"==============SASALINGO==============" RESET "\n");
         cout << "Para cadastrar algo digite 1" << endl;
-        cout << "Para listagem de infos digite 2" << endl;
+        cout << "Para listagem de informações digite 2" << endl;
         //op = getchar();
         cin >> option;
         switch (option) {
@@ -418,6 +451,8 @@ int main()
                 exaustivausuario(usuario, usuariodex, vet);
                 cin >> pausa;
                 break;
+            case 5:
+                buscaaleat(idiomadex, idioma, vet);
             }
 
             break;
