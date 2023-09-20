@@ -159,10 +159,10 @@ void buscaaleat(struct idiomasdex idiomadex[],  idiomas idioma[], int vet[]) {
     i = idiomadex[m].end;
     if ((cod == idiomadex[m].cod) && idioma[i].status == 0) {
         idioma[i].status = 1;
-        cout << "\n\n Cliente Excluido com Sucesso";
+        cout << "\n\n Cliente Excluido com Sucesso" << endl;
     }
     else
-        cout << "Cliente nao cadastrado";
+        cout << "Cliente nao cadastrado" << endl;
    
 }
 
@@ -224,7 +224,27 @@ void exaustivalicao(licoes licao[], licoesdex licaodex[], int vet[]) {
         }
     }
 }
+void buscaaleat_licoes(licoesdex licaodex[], licoes licao[], int vet[]) {
+    int cod;
+    cout << "qual código você deseja excluir";
+    cin >> cod;
+    int i = 0, f = vet[1];
+    int m = (i + f) / 2;
+    for (; f >= i && cod != licaodex[m].cod; m = (i + f) / 2) {
+        if (cod > licaodex[m].cod)
+            i = m + 1;
+        else
+            f = m - 1;
+    }
+    i = licaodex[m].end;
+    if ((cod == licaodex[m].cod) && licao[i].status == 0) {
+        licao[i].status = 1;
+        cout << "\n\n Cliente Excluido com Sucesso"<<endl;
+    }
+    else
+        cout << "Cliente nao cadastrado"<<endl;
 
+}
 
 
 
@@ -377,6 +397,7 @@ int main()
         printf(VERDE"==============SASALINGO==============" RESET "\n");
         cout << "Para cadastrar algo digite 1" << endl;
         cout << "Para listagem de informações digite 2" << endl;
+        cout << "Para exclusão de dados digite 3" << endl;
         //op = getchar();
         cin >> option;
         switch (option) {
@@ -428,6 +449,7 @@ int main()
             cout << "PARA LISTAR >LICAO< DIGITE 2" << endl;
             cout << "PARA LISTAR >EXERCICIO< DIGITE 3" << endl;
             cout << "PARA LISTAR >USUARIO< DIGITE 4" << endl;
+            cout << "PARA SAIR DIGITE 0" << endl;
             cin >> option;
 
             switch (option) {
@@ -451,11 +473,34 @@ int main()
                 exaustivausuario(usuario, usuariodex, vet);
                 cin >> pausa;
                 break;
-            case 5:
-                buscaaleat(idiomadex, idioma, vet);
+            case 0:
+                break;
+               
             }
 
             break;
+        case 3:
+            printf(VERDE"=============EXCLUSÃO DE DADOS=================" RESET "\n");
+            //cout<<"=============LISTAGEM DE INFORMAÇÕES================="<<endl;
+            cout << "PARA EXCLUIR >IDIOMA< DIGITE 1" << endl;
+            cout << "PARA EXCLUIR >LICAO< DIGITE 2" << endl;
+            cout << "PARA EXCLUIR >EXERCICIO< DIGITE 3" << endl;
+            cout << "PARA EXCLUIR >USUARIO< DIGITE 4" << endl;
+            cout << "PARA SAIR DIGITE 0" << endl;
+            cout << endl;
+            cin >> option;
+            switch (option) {
+            case 1:
+                buscaaleat(idiomadex, idioma, vet);
+            case 2:
+                buscaaleat_licoes(licaodex, licao, vet);
+            case 3:
+                buscaaleat_licoes(licaodex, licao, vet);
+            case 4:
+                buscaaleat_licoes(licaodex, licao, vet);
+            case 5:
+                break;
+            }
         }
     }; //fim do switch
     // return 0;//console
