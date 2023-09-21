@@ -144,9 +144,10 @@ void exaustivaidioma(struct idiomas idioma[], idiomasdex idiomadex[], int vet[])
         }
     }
 }
-void buscaaleat(struct idiomasdex idiomadex[],  idiomas idioma[], int vet[]) {
+void buscaaleat(struct idiomasdex idiomadex[], idiomas idioma[], int vet[]) {
     int cod;
-    cout << "qual código você deseja excluir";
+   
+    cout << "qual código você deseja excluir" << endl;
     cin >> cod;
     int i = 0, f = vet[0];
     int m = (i + f) / 2;
@@ -159,11 +160,11 @@ void buscaaleat(struct idiomasdex idiomadex[],  idiomas idioma[], int vet[]) {
     i = idiomadex[m].end;
     if ((cod == idiomadex[m].cod) && idioma[i].status == 0) {
         idioma[i].status = 1;
-        cout << "\n\n Cliente Excluido com Sucesso" << endl;
+        cout << "\n\n Idioma Excluido com Sucesso" << endl;
     }
     else
-        cout << "Cliente nao cadastrado" << endl;
-   
+        cout << "Idioma nao cadastrado" << endl;
+
 }
 
 
@@ -224,9 +225,10 @@ void exaustivalicao(licoes licao[], licoesdex licaodex[], int vet[]) {
         }
     }
 }
-void buscaaleat_licoes(licoesdex licaodex[], licoes licao[], int vet[]) {
+
+void buscaaleatlicao(licoesdex licaodex[], licoes licao[], int vet[]) {
     int cod;
-    cout << "qual código você deseja excluir";
+    cout << "qual código você deseja excluir" << endl;
     cin >> cod;
     int i = 0, f = vet[1];
     int m = (i + f) / 2;
@@ -239,12 +241,13 @@ void buscaaleat_licoes(licoesdex licaodex[], licoes licao[], int vet[]) {
     i = licaodex[m].end;
     if ((cod == licaodex[m].cod) && licao[i].status == 0) {
         licao[i].status = 1;
-        cout << "\n\n Cliente Excluido com Sucesso"<<endl;
+        cout << "\n\n Lição Excluido com Sucesso" << endl;
     }
     else
-        cout << "Cliente nao cadastrado"<<endl;
+        cout << "Lição nao cadastrado" << endl;
 
 }
+
 
 
 
@@ -308,6 +311,27 @@ void exaustivaex(exercicios ex[], exerciciosdex exdex[], int vet[]) {
     }
 }
 
+void buscaaleatex( exerciciosdex exdex[], exercicios ex[], int vet[]) {
+    int cod;
+    cout << "qual código você deseja excluir" << endl;
+    cin >> cod;
+    int i = 0, f = vet[0];
+    int m = (i + f) / 2;
+    for (; f >= i && cod != exdex[m].cod; m = (i + f) / 2) {
+        if (cod > exdex[m].cod)
+            i = m + 1;
+        else
+            f = m - 1;
+    }
+    i = exdex[m].end;
+    if ((cod == exdex[m].cod) && ex[i].status == 0) {
+        ex[i].status = 1;
+        cout << "\n\n Exercício Excluido com Sucesso" << endl;
+    }
+    else
+        cout << "Exercício nao cadastrado" << endl;
+
+}
 
 
 
@@ -369,7 +393,27 @@ void exaustivausuario(usuarios usuario[], usuariosdex usuariodex[], int vet[]) {
         }
     }
 }
+void buscaaleatusuario(usuariosdex usuariodex[],usuarios usuario[], int vet[]) {
+    int cod;
+    cout << "qual código você deseja excluir" << endl;
+    cin >> cod;
+    int i = 0, f = vet[1];
+    int m = (i + f) / 2;
+    for (; f >= i && cod != usuariodex[m].cod; m = (i + f) / 2) {
+        if (cod > usuariodex[m].cod)
+            i = m + 1;
+        else
+            f = m - 1;
+    }
+    i = usuariodex[m].end;
+    if ((cod == usuariodex[m].cod) && usuario[i].status == 0) {
+        usuario[i].status = 1;
+        cout << "\n\n Usuario Excluido com Sucesso" << endl;
+    }
+    else
+        cout << "Usuario nao cadastrado" << endl;
 
+}
 
 
 
@@ -492,13 +536,19 @@ int main()
             switch (option) {
             case 1:
                 buscaaleat(idiomadex, idioma, vet);
+                break;
             case 2:
-                buscaaleat_licoes(licaodex, licao, vet);
+                buscaaleatlicao(licaodex, licao, vet);
+                break;
             case 3:
-                buscaaleat_licoes(licaodex, licao, vet);
+                buscaaleatex(exdex, ex, vet);
+                break;
             case 4:
-                buscaaleat_licoes(licaodex, licao, vet);
+                buscaaleatusuario(usuariodex, usuario, vet);
+                break;
             case 5:
+                break;
+            case 0:
                 break;
             }
         }
