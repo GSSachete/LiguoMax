@@ -38,7 +38,9 @@ Criar uma struct chamada Usuarios com as seguintes informações: Codigo, Nome, 
 #include <fstream>
 #include <stdio.h>
 #include <windows.h>
-//#include <stdlib.h>
+#include<string.h>
+#include<iomanip>
+
 
 
 using namespace std;
@@ -144,7 +146,7 @@ void exaustivaidioma(struct idiomas idioma[], idiomasdex idiomadex[], int vet[])
         }
     }
 }
-void buscaaleat(struct idiomasdex idiomadex[], idiomas idioma[], int vet[]) {
+void buscaaleatidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[]) {
     int cod;
    
     cout << "qual código você deseja excluir" << endl;
@@ -166,6 +168,35 @@ void buscaaleat(struct idiomasdex idiomadex[], idiomas idioma[], int vet[]) {
         cout << "Idioma nao cadastrado" << endl;
 
 }
+void reorganizacao_idioma(idiomas idioma[], idiomas novoidioma[],  idiomasdex idiomadex[], idiomasdex novoidiomadex[], int vet[]) {
+    int j = -1;
+
+    for (int k = 0; k < vet[0]; k++) {
+        int i = idiomadex[k].end;
+        if (idioma[i].status == 0) {
+            j++;
+            novoidioma[j].cod_idioma = idioma[i].cod_idioma;
+            strcpy_s(novoidioma[j].desc, idioma[i].desc);
+            novoidioma[j].status = 0;
+            novoidiomadex[j].cod = novoidioma[j].cod_idioma;
+            novoidiomadex[j].end = j;
+
+        }
+    }
+    vet[0] = j + 1;
+    for (int k = 0; k < vet[0];k++) {
+        idioma[j].cod_idioma = novoidioma[j].cod_idioma;
+        strcpy_s(idioma[j].desc, novoidioma[j].desc);
+        idioma[j].status = 0;
+        idiomadex[j].cod = novoidiomadex[j].cod;
+        idiomadex[j].end = novoidiomadex[j].end;
+
+
+    }
+}
+
+
+
 
 
 
@@ -428,7 +459,9 @@ int main()
     int pausa;
     //char op;
     idiomas idioma[g];
+    idiomas novoidioma[g];
     idiomasdex idiomadex[g];
+    idiomasdex novoidiomadex[g];
     usuarios usuario[g];
     usuariosdex usuariodex[g];
     licoes licao[g];
@@ -535,7 +568,8 @@ int main()
             cin >> option;
             switch (option) {
             case 1:
-                buscaaleat(idiomadex, idioma, vet);
+                buscaaleatidioma(idiomadex, idioma, vet);
+                reorganizacao_idioma(idioma, novoidioma, idiomadex, novoidiomadex, vet);
                 break;
             case 2:
                 buscaaleatlicao(licaodex, licao, vet);
