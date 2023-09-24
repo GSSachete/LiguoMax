@@ -1,4 +1,4 @@
-/*Imagine que você foi contratado para criar um aplicativo de aprendizado de idiomas chamado "LingoMax". O aplicativo deve atender a pessoas que desejam aprender e praticar diferentes idiomas. Os usuários podem selecionar o idioma que desejam aprender e percorrer lições progressivas, incluindo vocabulário, exercícios gramaticais e testes de compreensão.
+﻿/*Imagine que você foi contratado para criar um aplicativo de aprendizado de idiomas chamado "LingoMax". O aplicativo deve atender a pessoas que desejam aprender e praticar diferentes idiomas. Os usuários podem selecionar o idioma que desejam aprender e percorrer lições progressivas, incluindo vocabulário, exercícios gramaticais e testes de compreensão.
 
 Para simular a estrutura de arquivos indexados, utilizaremos struct. Sendo assim, você deve:
 
@@ -35,9 +35,7 @@ Criar uma struct chamada Usuarios com as seguintes informações: Codigo, Nome, 
 5) O programa deverá emitir o ranqueamento dos usuários, de acordo com a Pontuação_Total de cada um.*/
 #include <iostream>
 #include <locale>
-#include <fstream>
 #include <stdio.h>
-#include <windows.h>
 #include<string.h>
 #include<iomanip>
 
@@ -100,7 +98,7 @@ struct usuariosdex {
 };
 
 
-//IDIOMA
+//*****************************IDIOMA*****************************
 void idiomaindex(idiomas idioma[], idiomasdex idiomadex[], int i, int vet[]) {
     int fim = vet[0] - 1;
     for (; fim >= 0 && idiomadex[fim].cod > idioma[i].cod_idioma; fim--) { //vai passar todo mundo que for maior uma pra tas
@@ -114,7 +112,7 @@ void inseriridioma(idiomas idioma[], idiomasdex idiomadex[], int g, int vet[]) {
     char fechar[2];
     printf(VERDE"-----------------------CADASTRAR IDIOMA-----------------------" RESET "\n");
     //cout << "-----------------------CADASTRAR IDIOMA-----------------------" << endl;
-    for (int i = vet[0];i < g; i++) {
+    for (int i = vet[0]; i < g; i++) {
         cout << "Por favor informe o codigo" << endl;
         cin >> idioma[i].cod_idioma;
         cout << "Por favor informe a descrição do idioma" << endl;
@@ -148,7 +146,7 @@ void exaustivaidioma(struct idiomas idioma[], idiomasdex idiomadex[], int vet[])
 }
 void buscaaleatidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[]) {
     int cod;
-   
+
     cout << "qual código você deseja excluir" << endl;
     cin >> cod;
     int i = 0, f = vet[0];
@@ -168,30 +166,35 @@ void buscaaleatidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[]
         cout << "Idioma nao cadastrado" << endl;
 
 }
-void reorganizacao_idioma(idiomas idioma[], idiomas novoidioma[],  idiomasdex idiomadex[], idiomasdex novoidiomadex[], int vet[]) {
+
+void reorganizar_idioma(struct idiomasdex idiomadex[], struct idiomasdex novoidiomadex[], struct idiomas idioma[], struct idiomas novoidioma[], int len[]) {
     int j = -1;
 
-    for (int k = 0; k < vet[0]; k++) {
+    for (int k = 0; k < len[0]; k++) {
         int i = idiomadex[k].end;
-        if (idioma[i].status == 0) {
+        if (idioma[i].status==0) {
             j++;
             novoidioma[j].cod_idioma = idioma[i].cod_idioma;
             strcpy_s(novoidioma[j].desc, idioma[i].desc);
             novoidioma[j].status = 0;
-            novoidiomadex[j].cod = novoidioma[j].cod_idioma;
-            novoidiomadex[j].end = j;
-
+            novoidiomadex[j].cod = idioma[i].cod_idioma;
+            novoidiomadex[j].end = i;
         }
     }
-    vet[0] = j + 1;
-    for (int k = 0; k < vet[0];k++) {
-        idioma[j].cod_idioma = novoidioma[j].cod_idioma;
-        strcpy_s(idioma[j].desc, novoidioma[j].desc);
-        idioma[j].status = 0;
-        idiomadex[j].cod = novoidiomadex[j].cod;
-        idiomadex[j].end = novoidiomadex[j].end;
-
-
+    for (int l = 0; l < len[0]; l++) {
+        idioma[l].cod_idioma = NULL;
+        strcpy_s(idioma[l].desc, NULL);
+        idioma[l].status = 0;
+        idiomadex[l].cod = NULL;
+        idiomadex[l].end = NULL;
+    len[0] = j + 1;
+    }
+    for (int l = 0; l < len[0]; l++) {
+        idioma[l].cod_idioma = novoidioma[l].cod_idioma;
+        strcpy_s(idioma[l].desc, novoidioma[l].desc);
+        idioma[l].status = novoidioma[l].status;
+        idiomadex[l].cod = novoidiomadex[l].cod;
+       idiomadex[l].end = novoidiomadex[l].end;
     }
 }
 
@@ -200,7 +203,7 @@ void reorganizacao_idioma(idiomas idioma[], idiomas novoidioma[],  idiomasdex id
 
 
 
-//LICAO
+//*****************************LIÇÃO*****************************
 void licaoindex(licoes licao[], licoesdex licaodex[], int i, int vet[]) {
     int fim = vet[1] - 1;
     for (; fim >= 0 && licaodex[fim].cod > licao[i].cod_licao; fim--) {
@@ -214,7 +217,7 @@ void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[]) {
     char fechar[2];
     printf(VERDE"-----------------------CADASTRAR LIÇÃO-----------------------" RESET "\n");
     //cout << "-----------------------CADASTRAR LIÇÃO-----------------------" << endl;
-    for (int i = vet[1];i < g; i++) {
+    for (int i = vet[1]; i < g; i++) {
         cout << "Por favor informe o codigo" << endl;
         cin >> licao[i].cod_licao;
         cout << "Por favor informe o codigo do idioma" << endl;
@@ -280,11 +283,43 @@ void buscaaleatlicao(licoesdex licaodex[], licoes licao[], int vet[]) {
 }
 
 
+void reorganizar_licao(struct licoesdex licaoindex[], struct licoesdex novolicaodex[], struct licoes licao[], struct licoes novalicao[], int vet[]) {
+    int j = -1;
+
+    for (int k = 0; k < vet[1]; k++) {
+        int i = licaoindex[k].end;
+        if (licao[i].status == 0) {
+            j++;
+            novalicao[j].cod_licao = licao[i].cod_licao;
+            novalicao[j].cod_idioma = licao[i].cod_idioma;
+            novalicao[j].total_nivel = licao[i].total_nivel;
+            novalicao[j].status = 0;
+            novolicaodex[j].cod = novalicao[j].cod_licao;
+            novolicaodex[j].end = j;
+        }
+    }
+    for (int l = 0; l < vet[1]; l++) {
+        licao[l].cod_licao = NULL;
+        licao[l].cod_idioma = NULL;
+        licao[l].total_nivel = NULL;
+        licao[l].status = 0;
+        licaoindex[l].cod = NULL;
+        licaoindex[l].end = NULL;
+    }
+    vet[1] = j + 1;
+    for (int l = 0; l < vet[1]; l++) {
+        licao[l].cod_licao = novalicao[l].cod_licao;
+        licao[l].cod_idioma = novalicao[l].cod_idioma;
+        licao[l].total_nivel = novalicao[l].total_nivel;
+        licao[l].status = novalicao[l].status;
+        licaoindex[l].cod = novolicaodex[l].cod;
+        licaoindex[l].end = novolicaodex[l].end;
+    }
+}
 
 
 
-
-//exercicio
+//*****************************EXERCÍCIO*****************************
 void exindex(exercicios ex[], exerciciosdex exdex[], int i, int vet[]) {
     int fim = vet[2] - 1;
     for (; fim >= 0 && exdex[fim].cod > ex[i].cod_exercicio; fim--) { //3 maior que 1 entao entra no for
@@ -298,7 +333,7 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
     char fechar[2];
     printf(VERDE"-----------------------CADASTRAR EXERCICIO-----------------------" RESET "\n");
     // cout << "-----------------------CADASTRAR EXERCICIO-----------------------" << endl;
-    for (int i = vet[2];i < g; i++) {
+    for (int i = vet[2]; i < g; i++) {
         cout << "Por favor informe o codigo do exercicio" << endl;
         cin >> ex[i].cod_exercicio;
         cout << "Por favor informe o nivel de dificuldade do exercicio" << endl;
@@ -342,7 +377,7 @@ void exaustivaex(exercicios ex[], exerciciosdex exdex[], int vet[]) {
     }
 }
 
-void buscaaleatex( exerciciosdex exdex[], exercicios ex[], int vet[]) {
+void buscaaleatex(exerciciosdex exdex[], exercicios ex[], int vet[]) {
     int cod;
     cout << "qual código você deseja excluir" << endl;
     cin >> cod;
@@ -363,14 +398,53 @@ void buscaaleatex( exerciciosdex exdex[], exercicios ex[], int vet[]) {
         cout << "Exercício nao cadastrado" << endl;
 
 }
+void reorganizar_exercicio(struct exerciciosdex exdex[], struct exerciciosdex novoexdex[], struct exercicios ex[], struct exercicios novoex[], int vet[]) {
+    int j = -1;
+
+    for (int k = 0; k < vet[2]; k++) {
+        int i = exdex[k].end;
+        if (ex[i].status==0) {
+            j++;
+            novoex[j].cod_exercicio = ex[i].cod_exercicio;
+            novoex[j].nivel_dificuldade = ex[i].nivel_dificuldade;
+            novoex[j].pontos = ex[i].pontos;
+            strcpy_s(novoex[j].perguntas, ex[i].perguntas);
+            strcpy_s(novoex[j].resposta, ex[i].resposta);
+            novoex[j].status = 0;
+            novoexdex[j].cod = novoex[i].cod_exercicio;
+            novoexdex[j].end = i;
+        }
+    }
+    for (int l = 0; l < vet[2]; l++) {
+        ex[l].cod_exercicio = NULL;
+        ex[l].nivel_dificuldade = NULL;
+        ex[l].pontos = NULL;
+        strcpy_s(ex[l].perguntas, NULL);
+        strcpy_s(ex[l].resposta, NULL);
+        ex[l].status = 0;
+        exdex[l].cod = NULL;
+        exdex[l].end = NULL;
+    }
+    vet[2] = j + 1;
+    for (int l = 0; l < vet[2]; l++) {
+        ex[l].cod_exercicio = novoex[l].cod_exercicio;
+        ex[l].nivel_dificuldade = novoex[l].nivel_dificuldade;
+        ex[l].pontos = novoex[l].pontos;
+        strcpy_s(ex[l].perguntas, novoex[l].perguntas);
+        strcpy_s(ex[l].resposta, novoex[l].resposta);
+        ex[l].status= novoex[l].status;
+        exdex[l].cod = novoexdex[l].cod;
+        exdex[l].end = novoexdex[l].end;
+    }
+}
 
 
 
 
 
-//usuario
+//*****************************USUARIO*****************************
 void usuarioindex(usuarios usuario[], usuariosdex usuariodex[], int i, int vet[]) {
-    int fim = vet[2] - 1;
+    int fim = vet[3] - 1;
     for (; fim >= 0 && usuariodex[fim].cod > usuario[i].cod_usuario; fim--) {
         usuariodex[fim + 1] = usuariodex[fim];
     }
@@ -382,7 +456,7 @@ void inserirusuario(usuarios usuario[], usuariosdex usuariodex[], int g, int vet
     char fechar[3];
     printf(VERDE"-----------------------CADASTRAR USUARIO-----------------------" RESET "\n");
     // cout << "-----------------------CADASTRAR USUARIO-----------------------" << endl;
-    for (int i = vet[2];i < g; i++) {
+    for (int i = vet[3]; i < g; i++) {
         cout << "Por favor informe o codigo do usuario" << endl;
         cin >> usuario[i].cod_usuario;
         cout << "Por favor informe o nome do usuario" << endl;
@@ -424,7 +498,7 @@ void exaustivausuario(usuarios usuario[], usuariosdex usuariodex[], int vet[]) {
         }
     }
 }
-void buscaaleatusuario(usuariosdex usuariodex[],usuarios usuario[], int vet[]) {
+void buscaaleatusuario(usuariosdex usuariodex[], usuarios usuario[], int vet[]) {
     int cod;
     cout << "qual código você deseja excluir" << endl;
     cin >> cod;
@@ -445,14 +519,53 @@ void buscaaleatusuario(usuariosdex usuariodex[],usuarios usuario[], int vet[]) {
         cout << "Usuario nao cadastrado" << endl;
 
 }
+void reorganizar_usuario(struct usuariosdex usuariodex[], struct usuariosdex novousuariodex[], struct usuarios usuario[], struct usuarios novousuario[], int vet[]) {
+    int j = -1;
+
+    for (int k = 0; k < vet[3]; k++) {
+        int i = usuariodex[k].end;
+        if (usuario[i].status==0) {
+            j++;
+            novousuario[j].cod_usuario = usuario[i].cod_usuario;
+            novousuario[j].cod_idioma = usuario[i].cod_idioma;
+            novousuario[j].nivel_atual = usuario[i].nivel_atual;
+            novousuario[j].pontos_total = usuario[i].pontos_total;
+            strcpy_s(novousuario[j].nome, usuario[i].nome);
+            novousuario[j].status = NULL;
+            novousuariodex[j].cod = novousuario[i].cod_usuario;
+            novousuariodex[j].end = i;
+        }
+    }
+    for (int l = 0; l < vet[3]; l++) {
+        usuario[l].cod_usuario = NULL;
+        usuario[l].cod_idioma = NULL;
+        usuario[l].nivel_atual = NULL;
+        usuario[l].pontos_total = NULL;
+        strcpy_s(usuario[l].nome, NULL);
+        usuario[l].status = NULL;
+        usuariodex[l].cod = NULL;
+        usuariodex[l].end = NULL;
+    }
+    vet[3] = j + 1;
+    for (int l = 0; l < vet[3]; l++) {
+        usuario[l].cod_usuario = novousuario[l].cod_usuario;
+        usuario[l].cod_idioma = novousuario[l].cod_idioma;
+        usuario[l].nivel_atual = novousuario[l].nivel_atual;
+        usuario[l].pontos_total = novousuario[l].pontos_total;
+        strcpy_s(usuario[l].nome, novousuario[l].nome);
+        usuario[l].status = novousuario[l].status;
+        usuariodex[l].cod = novousuariodex[l].cod;
+        usuariodex[l].end = novousuariodex[l].end;
+    }
+}
 
 
 
 
-//menu
+//*****************************MENU*****************************
 int main()
 {
-    setlocale(LC_ALL, "pt_BR.UTF-8");
+  //  setlocale(LC_ALL, "pt_BR.UTF-8");
     const int g = 10;
     int vet[4] = { 0 };
     int option = 0;
@@ -462,12 +575,22 @@ int main()
     idiomas novoidioma[g];
     idiomasdex idiomadex[g];
     idiomasdex novoidiomadex[g];
+
     usuarios usuario[g];
     usuariosdex usuariodex[g];
+    usuarios novousuario[g];
+    usuariosdex novousuariodex[g];
+
     licoes licao[g];
     licoesdex licaodex[g];
+    licoes novalicao[g];
+    licoesdex novalicaodex[g];
+
     exercicios ex[g];
     exerciciosdex exdex[g];
+    exercicios novoex[g];
+    exerciciosdex novoexdex[g];
+
     while (true) {
         system("clear||cls");
         //cout << "==============DUOLINGO==============" << endl;
@@ -475,14 +598,14 @@ int main()
         cout << "Para cadastrar algo digite 1" << endl;
         cout << "Para listagem de informações digite 2" << endl;
         cout << "Para exclusão de dados digite 3" << endl;
-        //op = getchar();
+
         cin >> option;
         switch (option) {
         case 1:
             system("clear||cls");
             printf(VERDE"==============SASALINGO==============" RESET "\n");
             cout << "Para cadastrar >idioma< digite 1" << endl;
-            cout << "Para cadastrar >liçao< digite 2" << endl;
+            cout << "Para cadastrar >lição< digite 2" << endl;
             cout << "Para cadastrar >exercicio< digite 3" << endl;
             cout << "Para cadastrar >usuarios< digite 4" << endl;
             cout << "Para sair digite 0" << endl;
@@ -500,23 +623,9 @@ int main()
             case 4:
                 inserirusuario(usuario, usuariodex, g, vet);
                 break;
-                /*
-            case 5:
-                for (int i = 0; i < vet[1]; i++) {
-                    cout << idiomadex[i].cod << endl;
-                    cout << idiomadex[i].end << endl;
-                    cout << "============================="<<endl;
-
-                    cout << licaodex[i].cod << endl;
-                    cout << licaodex[i].end << endl;
-                    cout << "=============================" << endl;
-
-                }
-                cin >> option;
-                break;
-                 */
+           
             case 0:
-            break;
+                break;
             }
             break;
         case 2:
@@ -552,7 +661,7 @@ int main()
                 break;
             case 0:
                 break;
-               
+
             }
 
             break;
@@ -569,19 +678,21 @@ int main()
             switch (option) {
             case 1:
                 buscaaleatidioma(idiomadex, idioma, vet);
-                reorganizacao_idioma(idioma, novoidioma, idiomadex, novoidiomadex, vet);
+                reorganizar_idioma(idiomadex, novoidiomadex, idioma, novoidioma, vet);
                 break;
             case 2:
                 buscaaleatlicao(licaodex, licao, vet);
+                reorganizar_licao(licaodex, novalicaodex, licao, novalicao, vet);
                 break;
             case 3:
                 buscaaleatex(exdex, ex, vet);
+                reorganizar_exercicio(exdex, novoexdex, ex, novoex, vet);
                 break;
             case 4:
                 buscaaleatusuario(usuariodex, usuario, vet);
+                reorganizar_usuario(usuariodex, novousuariodex, usuario, novousuario, vet);
                 break;
-            case 5:
-                break;
+           
             case 0:
                 break;
             }
