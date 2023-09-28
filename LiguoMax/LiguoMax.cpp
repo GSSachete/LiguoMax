@@ -192,7 +192,7 @@ int buscaidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[], int 
                 cout << "O idioma escolhido foi: " << idioma[posic].desc << endl;
             }
             else {
-                cout << "Idioma não cadastrado, por favor  refaça seu cadastro!" << endl;
+                cout << "Idioma não cadastrado!" << endl;
                 
             }
         }
@@ -470,7 +470,37 @@ void reorganizar_exercicio(struct exerciciosdex exdex[], struct exerciciosdex no
     }
 }
 
+int buscaex(exerciciosdex exdex[], exercicios ex[], int vet[], int cod) {
 
+    int i = 0, f = vet[0];
+    int m = (i + f) / 2;
+    for (; f >= i && cod != exdex[m].cod; m = (i + f) / 2) {
+        if (cod > exdex[m].cod)
+            i = m + 1;
+        else
+            f = m - 1;
+    }
+    if (cod == exdex[m].cod) {
+        return exdex[m].end;
+    }
+    else
+        return -1;
+}
+
+void consultaex(exercicios ex[], int posic) {
+    if (posic < 0) {
+        cout << "Idioma não cadastrado, por favor refaça seu cadastro!" << endl;
+    }
+    else {
+        if ((ex[posic].status == 0)) {
+            cout << "O idioma escolhido foi: " << ex[posic].cod_exercicio << endl;
+        }
+        else {
+            cout << "Idioma não cadastrado, por favor  refaça seu cadastro!" << endl;
+
+        }
+    }
+}
 
 
 
@@ -552,7 +582,7 @@ void buscaaleatusuario(usuariosdex usuariodex[], usuarios usuario[], int vet[]) 
         cout << "Usuario nao cadastrado" << endl;
 
 }
-void reorganizar_usuario(struct usuariosdex usuariodex[], struct usuariosdex novousuariodex[], struct usuarios usuario[], struct usuarios novousuario[], int vet[]) {
+void reorganizar_usuario(usuariosdex usuariodex[], usuariosdex novousuariodex[],  usuarios usuario[],  usuarios novousuario[], int vet[]) {
     int j = -1;
 
     for (int k = 0; k < vet[3]; k++) {
@@ -591,8 +621,72 @@ void reorganizar_usuario(struct usuariosdex usuariodex[], struct usuariosdex nov
         usuariodex[l].end = novousuariodex[l].end;
     }
 }
+int buscausuario(usuariosdex usuariodex[], usuarios usuario[], int vet[], int cod) {
 
+    int i = 0, f = vet[0];
+    int m = (i + f) / 2;
+    for (; f >= i && cod != usuariodex[m].cod; m = (i + f) / 2) {
+        if (cod > usuariodex[m].cod)
+            i = m + 1;
+        else
+            f = m - 1;
+    }
+    if (cod == usuariodex[m].cod) {
+        return usuariodex[m].end;
+    }
+    else
+        return -1;
+}
 
+void consultausuario(usuarios usuario[], int posic) {
+    if (posic < 0) {
+        cout << "Idioma não cadastrado, por favor refaça seu cadastro!" << endl;
+    }
+    else {
+        if ((usuario[posic].status == 0)) {
+            cout << "O idioma escolhido foi: " << usuario[posic].cod_usuario << endl;
+        }
+        else {
+            cout << "Idioma não cadastrado, por favor  refaça seu cadastro!" << endl;
+
+        }
+    }
+}
+
+//**********************************EXERCICIOS**********************************
+void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usuariosdex usuariodex[], int g, int vet []) {
+    int y;
+    system("clear||cls");
+    char fechar[6];
+    printf(VERDE"-----------------------PRATICAR EXERCICIO-----------------------" RESET "\n");
+      
+        cout << "Digite seu código de usuario" << endl;
+        cin >> y;
+        cout << "DIgite novamente para confirmar por favor" << endl;
+        cin >> usuario[y].cod_idioma;
+        consultausuario(usuario, buscausuario(usuariodex, usuario, vet, usuario[y].cod_idioma)); //idioma na posicao busca .ddex 
+        usuario[y].status = 0;
+        cout << "Digite seu código de exercicio para começar a praticar" << endl;
+        cin >> y;
+        cout << "DIgite novamente para confirmar por favor" << endl;
+        cin >> ex[y].cod_exercicio;
+        consultaex(ex, buscaex(exdex, ex, vet, ex[y].cod_exercicio)); //idioma na posicao busca .ddex 
+        usuario[y].status = 0;
+
+        /*
+       cout << "Digite 'sair' para consultar ou cadastrar usuario ou 'conf' para caso queira confirmar o usuario  ";
+        cin >> fechar;
+        if (strcmp(fechar, "sair") == 0) {
+            return;
+        }
+        if (strcmp(fechar, "conf") == 0) {
+            cout << endl;
+        }
+       */
+    
+      if (usuario[y].nivel_atual>=ex[y].nivel_dificuldade) {
+      }
+}
 
 
 //*****************************MENU*****************************
@@ -745,8 +839,10 @@ int main()
             cin >> option;
             switch (option) {
             case 1:
-
+                praticarex(ex, exdex, usuario, usuariodex,  g, vet);
+                break;
             case 2:
+                inserirusuario(usuario, usuariodex, g, vet, idioma, idiomadex); 
                 break;
             case 3:
                 break;
