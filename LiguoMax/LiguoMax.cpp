@@ -166,6 +166,36 @@ void buscaaleatidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[]
         cout << "Idioma nao cadastrado" << endl;
 
 }
+int buscaidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[], int cod) {
+    
+    int i = 0, f = vet[0];
+    int m = (i + f) / 2;
+    for (; f >= i && cod != idiomadex[m].cod; m = (i + f) / 2) {
+        if (cod > idiomadex[m].cod)
+            i = m + 1;
+        else
+            f = m - 1;
+    }
+    if (cod == idiomadex[m].cod) {
+        return idiomadex[m].end;
+    }
+    else
+        return -1;
+}
+
+    void consulta_idioma(idiomas idioma[], int posic) {
+        if (posic < 0) {
+            cout << "Idioma indefinido!" << endl;
+        }
+        else {
+            if ((idioma[posic].status==0)) {
+                cout << "Descrição: " << idioma[posic].desc << endl;
+            }
+            else {
+                cout << "Idioma indefinido!" << endl;
+            }
+        }
+    }
 
 void reorganizar_idioma(struct idiomasdex idiomadex[], struct idiomasdex novoidiomadex[], struct idiomas idioma[], struct idiomas novoidioma[], int len[]) {
     int j = -1;
@@ -183,7 +213,7 @@ void reorganizar_idioma(struct idiomasdex idiomadex[], struct idiomasdex novoidi
     }
     for (int l = 0; l < len[0]; l++) {
         idioma[l].cod_idioma = NULL;
-        strcpy_s(idioma[l].desc, NULL);
+        strcpy_s(idioma[l].desc, "");
         idioma[l].status = 0;
         idiomadex[l].cod = NULL;
         idiomadex[l].end = NULL;
@@ -212,7 +242,7 @@ void licaoindex(licoes licao[], licoesdex licaodex[], int i, int vet[]) {
     licaodex[fim + 1].cod = licao[i].cod_licao;
     licaodex[fim + 1].end = i;
 }
-void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[]) {
+void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[], idiomas idioma [], idiomasdex idiomadex []) {
     system("clear||cls");
     char fechar[2];
     printf(VERDE"-----------------------CADASTRAR LIÇÃO-----------------------" RESET "\n");
@@ -222,6 +252,7 @@ void inserirlicao(licoes licao[], licoesdex licaodex[], int g, int vet[]) {
         cin >> licao[i].cod_licao;
         cout << "Por favor informe o codigo do idioma" << endl;
         cin >> licao[i].cod_idioma;
+      consulta_idioma(idioma, buscaidioma(idiomadex, idioma, vet, licao[i].cod_idioma)); //idioma na posicao busca .ddex             
         cout << "Por favor informe o total do nivel" << endl;
         cin >> licao[i].total_nivel;
         licaoindex(licao, licaodex, i, vet);
@@ -419,8 +450,8 @@ void reorganizar_exercicio(struct exerciciosdex exdex[], struct exerciciosdex no
         ex[l].cod_exercicio = NULL;
         ex[l].nivel_dificuldade = NULL;
         ex[l].pontos = NULL;
-        strcpy_s(ex[l].perguntas, NULL);
-        strcpy_s(ex[l].resposta, NULL);
+        strcpy_s(ex[l].perguntas, "");
+        strcpy_s(ex[l].resposta, "");
         ex[l].status = 0;
         exdex[l].cod = NULL;
         exdex[l].end = NULL;
@@ -451,7 +482,7 @@ void usuarioindex(usuarios usuario[], usuariosdex usuariodex[], int i, int vet[]
     usuariodex[fim + 1].cod = usuario[i].cod_usuario;
     usuariodex[fim + 1].end = i;
 }
-void inserirusuario(usuarios usuario[], usuariosdex usuariodex[], int g, int vet[]) {
+void inserirusuario(usuarios usuario[], usuariosdex usuariodex[], int g, int vet[], idiomas idioma [], idiomasdex idiomadex[]) {
     system("clear||cls");
     char fechar[3];
     printf(VERDE"-----------------------CADASTRAR USUARIO-----------------------" RESET "\n");
@@ -463,6 +494,7 @@ void inserirusuario(usuarios usuario[], usuariosdex usuariodex[], int g, int vet
         cin >> usuario[i].nome;
         cout << "Por favor digite o codigo do idioma" << endl;
         cin >> usuario[i].cod_idioma;
+        consulta_idioma(idioma, buscaidioma(idiomadex, idioma, vet, usuario[i].cod_idioma)); //idioma na posicao busca .ddex 
         cout << "Por favor digite o nivel atual que voce esta" << endl;
         cin >> usuario[i].nivel_atual;
         cout << "Por favor digite quantos pontos atuais voce esta" << endl;
@@ -502,7 +534,7 @@ void buscaaleatusuario(usuariosdex usuariodex[], usuarios usuario[], int vet[]) 
     int cod;
     cout << "qual código você deseja excluir" << endl;
     cin >> cod;
-    int i = 0, f = vet[1];
+    int i = 0, f = vet[3];
     int m = (i + f) / 2;
     for (; f >= i && cod != usuariodex[m].cod; m = (i + f) / 2) {
         if (cod > usuariodex[m].cod)
@@ -541,7 +573,7 @@ void reorganizar_usuario(struct usuariosdex usuariodex[], struct usuariosdex nov
         usuario[l].cod_idioma = NULL;
         usuario[l].nivel_atual = NULL;
         usuario[l].pontos_total = NULL;
-        strcpy_s(usuario[l].nome, NULL);
+        strcpy_s(usuario[l].nome, "");
         usuario[l].status = NULL;
         usuariodex[l].cod = NULL;
         usuariodex[l].end = NULL;
@@ -615,13 +647,13 @@ int main()
                 inseriridioma(idioma, idiomadex, g, vet);
                 break;
             case 2:
-                inserirlicao(licao, licaodex, g, vet);
+                inserirlicao(licao, licaodex, g, vet, idioma, idiomadex);
                 break;
             case 3:
                 inserirexercicio(ex, exdex, g, vet);
                 break;
             case 4:
-                inserirusuario(usuario, usuariodex, g, vet);
+                inserirusuario(usuario, usuariodex, g, vet, idioma, idiomadex);
                 break;
            
             case 0:
@@ -679,6 +711,7 @@ int main()
             case 1:
                 buscaaleatidioma(idiomadex, idioma, vet);
                 reorganizar_idioma(idiomadex, novoidiomadex, idioma, novoidioma, vet);
+                cin >> pausa;
                 break;
             case 2:
                 buscaaleatlicao(licaodex, licao, vet);
@@ -691,6 +724,7 @@ int main()
             case 4:
                 buscaaleatusuario(usuariodex, usuario, vet);
                 reorganizar_usuario(usuariodex, novousuariodex, usuario, novousuario, vet);
+                cin >> pausa;
                 break;
            
             case 0:
