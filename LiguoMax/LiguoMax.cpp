@@ -185,14 +185,15 @@ int buscaidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[], int 
 
     void consulta_idioma(idiomas idioma[], int posic) {
         if (posic < 0) {
-            cout << "Idioma indefinido!" << endl;
+            cout << "Idioma não cadastrado, por favor refaça seu cadastro!" << endl;
         }
         else {
             if ((idioma[posic].status==0)) {
-                cout << "Descrição: " << idioma[posic].desc << endl;
+                cout << "O idioma escolhido foi: " << idioma[posic].desc << endl;
             }
             else {
-                cout << "Idioma indefinido!" << endl;
+                cout << "Idioma não cadastrado, por favor  refaça seu cadastro!" << endl;
+                
             }
         }
     }
@@ -630,6 +631,7 @@ int main()
         cout << "Para cadastrar algo digite 1" << endl;
         cout << "Para listagem de informações digite 2" << endl;
         cout << "Para exclusão de dados digite 3" << endl;
+        cout << "Para ja seja cadastrado e queira praticar 4" << endl;
 
         cin >> option;
         switch (option) {
@@ -716,10 +718,12 @@ int main()
             case 2:
                 buscaaleatlicao(licaodex, licao, vet);
                 reorganizar_licao(licaodex, novalicaodex, licao, novalicao, vet);
+                cin >> pausa;
                 break;
             case 3:
                 buscaaleatex(exdex, ex, vet);
                 reorganizar_exercicio(exdex, novoexdex, ex, novoex, vet);
+                cin >> pausa;
                 break;
             case 4:
                 buscaaleatusuario(usuariodex, usuario, vet);
@@ -730,7 +734,25 @@ int main()
             case 0:
                 break;
             }
+            break;
+        case 4:
+            printf(VERDE"=============PRATICAR EXERCICIOS=================" RESET "\n");
+            //cout<<"=============LISTAGEM DE INFORMAÇÕES================="<<endl;
+            cout << "JA SOU CADASTRADO 1" << endl;
+            cout << "NÃO TENHO CADASTRO 2" << endl;
+            cout << "PARA SAIR DIGITE 0" << endl;
+            cout << endl;
+            cin >> option;
+            switch (option) {
+            case 1:
+
+            case 2:
+                break;
+            case 3:
+                break;
+            }
         }
+
     }; //fim do switch
     // return 0;//console
 } //fim do main
