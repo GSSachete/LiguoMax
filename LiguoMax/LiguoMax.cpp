@@ -644,10 +644,10 @@ void consultausuario(usuarios usuario[], int posic) {
     }
     else {
         if ((usuario[posic].status == 0)) {
-            cout << "O idioma escolhido foi: " << usuario[posic].cod_usuario << endl;
+            cout << "O usuário escolhido foi: " << usuario[posic].nome << endl;
         }
         else {
-            cout << "Idioma não cadastrado, por favor  refaça seu cadastro!" << endl;
+            cout << "Usuario não cadastrado, por favor  refaça seu cadastro!" << endl;
 
         }
     }
@@ -656,36 +656,49 @@ void consultausuario(usuarios usuario[], int posic) {
 //**********************************EXERCICIOS**********************************
 void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usuariosdex usuariodex[], int g, int vet []) {
     int y;
+    int excod;
+    int enderuser;
+    char resposta[30];
+    int endex;
+    int palmeiras;
     system("clear||cls");
     char fechar[6];
     printf(VERDE"-----------------------PRATICAR EXERCICIO-----------------------" RESET "\n");
       
         cout << "Digite seu código de usuario" << endl;
         cin >> y;
-        cout << "DIgite novamente para confirmar por favor" << endl;
-        cin >> usuario[y].cod_idioma;
-        consultausuario(usuario, buscausuario(usuariodex, usuario, vet, usuario[y].cod_idioma)); //idioma na posicao busca .ddex 
-        usuario[y].status = 0;
+        enderuser = buscausuario(usuariodex, usuario, vet, y);
+       consultausuario(usuario, buscausuario(usuariodex, usuario, vet,y)); //idioma na posicao busca .ddex
         cout << "Digite seu código de exercicio para começar a praticar" << endl;
-        cin >> y;
-        cout << "DIgite novamente para confirmar por favor" << endl;
-        cin >> ex[y].cod_exercicio;
-        consultaex(ex, buscaex(exdex, ex, vet, ex[y].cod_exercicio)); //idioma na posicao busca .ddex 
-        usuario[y].status = 0;
+         cin >> excod;
+        consultaex(ex, buscaex(exdex, ex, vet, excod)); //idioma na posicao busca .ddex 
+       endex = buscaex(exdex, ex, vet, excod);
+       
 
-        /*
-       cout << "Digite 'sair' para consultar ou cadastrar usuario ou 'conf' para caso queira confirmar o usuario  ";
-        cin >> fechar;
-        if (strcmp(fechar, "sair") == 0) {
-            return;
-        }
-        if (strcmp(fechar, "conf") == 0) {
-            cout << endl;
-        }
-       */
+   
     
-      if (usuario[y].nivel_atual>=ex[y].nivel_dificuldade) {
+      if (usuario[enderuser].nivel_atual>=ex[endex].nivel_dificuldade) {
+          cout << ex[endex].perguntas;
+          cin >> resposta;
+          if (strcmp(resposta, ex[endex].resposta) == 0) {
+              usuario[enderuser].pontos_total = usuario[enderuser].pontos_total + ex[endex].pontos;
+              cout << "você acertou agora você tem " << usuario[enderuser].pontos_total << " pontos"<<endl;
+              cin >>palmeiras;
+          }
+          else {
+              usuario[enderuser].pontos_total = usuario[enderuser].pontos_total - (ex[endex].pontos * 0.1);
+              cout << "voce errou, estuda mais"<<endl;
+              cin >> palmeiras;
+              cout << "você agora você tem " << usuario[enderuser].pontos_total << " pontos" << endl;
+              cin >> palmeiras;
+              
+          }
       }
+      else {
+          cout << "Seu usuario ainda não está nesse nível, pratique mais."<<endl;
+          return;
+      }
+      
 }
 
 
