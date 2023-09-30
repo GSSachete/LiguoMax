@@ -662,7 +662,7 @@ void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usu
     int endex;
     int palmeiras;
     system("clear||cls");
-    char fechar[6];
+    
     printf(VERDE"-----------------------PRATICAR EXERCICIO-----------------------" RESET "\n");
       
         cout << "Digite seu código de usuario" << endl;
@@ -682,13 +682,17 @@ void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usu
           cin >> resposta;
           if (strcmp(resposta, ex[endex].resposta) == 0) {
               usuario[enderuser].pontos_total = usuario[enderuser].pontos_total + ex[endex].pontos;
+              if (usuario[enderuser].pontos_total >= 100) {
+                  usuario[enderuser].pontos_total = usuario[enderuser].pontos_total - 100;
+                  usuario[enderuser].nivel_atual++;
+                  
+              }
               cout << "você acertou agora você tem " << usuario[enderuser].pontos_total << " pontos"<<endl;
               cin >>palmeiras;
           }
           else {
               usuario[enderuser].pontos_total = usuario[enderuser].pontos_total - (ex[endex].pontos * 0.1);
               cout << "voce errou, estuda mais"<<endl;
-              cin >> palmeiras;
               cout << "você agora você tem " << usuario[enderuser].pontos_total << " pontos" << endl;
               cin >> palmeiras;
               
@@ -700,7 +704,72 @@ void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usu
       }
       
 }
+//*****************************rankeamento*****************************
+/*
+void ranking(exercicios ex[], exerciciosdex exdex[], usuarios usuario[], usuariosdex usuariodex[], int g, int vet[]) {
+    system("clear||cls");
+    printf(VERDE"-----------------------RANK-----------------------" RESET "\n");
+    int maior = 0;
+    const int h = 10000;
+    usuarios vetaux[h];
+    int t = 0;
+    
+ 
+   
+    for(int i=0; i < g; i++) {
+        if (t == 0) {
+            vetaux[i + 1].pontos_total = usuario[i].pontos_total;
 
+        }
+        else {
+            vetaux[i].pontos_total = usuario[i].pontos_total;
+
+            for (int j=0; j < t; j--) {
+                if (usuario[i].pontos_total < vetaux[j].pontos_total) {
+                    vetaux[i + 1].pontos_total = vetaux[i].pontos_total;
+                    vetaux[0].cod_usuario = usuario[i].cod_usuario;
+                    vetaux[0].cod_idioma = usuario[i].cod_idioma;
+                    vetaux[0].nivel_atual = usuario[i].nivel_atual;
+                    vetaux[0].pontos_total = usuario[i].pontos_total;
+                }
+            }
+            cout << usuario[i].cod_usuario << endl;
+            cin >> maior;
+        }
+    
+    }
+}
+
+*/
+void ordenarPorPontuacao(usuarios usuario[], int vet[]) {
+    for (int i = 0; i < vet[3] - 1; i++) {
+        for (int j = 0; j < vet[3] - i - 1; j++) {
+            if (usuario[j].pontos_total < usuario[j + 1].pontos_total) {
+                // Cria variável temporária para armazenar o usuário atual
+                usuarios temp = usuario[j];
+                // Copie o próximo usuário para a posição atual
+                usuario[j] = usuario[j + 1];
+                // Copie o usuário temporário (anterior) para a próxima posição
+                usuario[j + 1] = temp;
+            }
+        }
+    }
+}
+
+
+// Função para exibir o ranking dos usuários
+void exibirRanking(usuarios usuario[], int vet[]) {
+    // Ordena os usuários pelo campo Pontuação_Total
+    ordenarPorPontuacao(usuario, vet);
+
+    // Exibe o ranking em ordem decrescente
+    printf(VERDE"-----------------------RANK-----------------------" RESET "\n");
+    printf("%-10s%-20s%-15s%-15s\n", "Posição", "Nome", "Pontuação Total", "Nível Atual");
+
+    for (int i = 0; i < vet[3]; i++) {
+        printf("%-10d%-20s%-15.2f%-15d\n", i + 1, usuario[i].nome, usuario[i].pontos_total, usuario[i].nivel_atual);
+    }
+}
 
 //*****************************MENU*****************************
 int main()
@@ -739,6 +808,7 @@ int main()
         cout << "Para listagem de informações digite 2" << endl;
         cout << "Para exclusão de dados digite 3" << endl;
         cout << "Para ja seja cadastrado e queira praticar 4" << endl;
+        cout << "Para acessar o rank 5" << endl;
 
         cin >> option;
         switch (option) {
@@ -858,6 +928,23 @@ int main()
                 inserirusuario(usuario, usuariodex, g, vet, idioma, idiomadex); 
                 break;
             case 3:
+                break;
+            }
+            break;
+        case 5:
+            printf(VERDE"===============RANK=================" RESET "\n");
+            cout << "PARA VER RANK DIGITE 1" << endl;
+           
+            cout << "PARA SAIR DIGITE 0" << endl;
+            cout << endl;
+            cin >> option;
+            switch (option) {
+            case 1:
+                //ranking(ex, exdex, usuario, usuariodex, g, vet);
+                exibirRanking( usuario, vet);
+                cin >> pausa;
+                break;
+            case 2:
                 break;
             }
         }
