@@ -72,8 +72,8 @@ struct licoesdex {
 struct exercicios {
     int cod_exercicio;
     int nivel_dificuldade;
-    char perguntas[30];
-    char resposta[30];
+    char perguntas[80];
+    char resposta[80];
     float pontos;
     int status;
 };
@@ -116,7 +116,8 @@ void inseriridioma(idiomas idioma[], idiomasdex idiomadex[], int g, int vet[]) {
         cout << "Por favor informe o codigo" << endl;
         cin >> idioma[i].cod_idioma;
         cout << "Por favor informe a descrição do idioma" << endl;
-        cin >> idioma[i].desc;
+        cin.ignore();
+        cin.getline(idioma[i].desc, 30);
         idiomaindex(idioma, idiomadex, i, vet);
         idioma[i].status = 0;
         vet[0]++;
@@ -192,7 +193,7 @@ int buscaidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[], int 
                 cout << "O idioma escolhido foi: " << idioma[posic].desc << endl;
             }
             else {
-                cout << "Idioma não cadastrado!" << endl;
+                cout << "Idioma não cadastrado!, DIGITE 0 PARA SAIR" << endl;
                 
             }
         }
@@ -208,8 +209,8 @@ void reorganizar_idioma(struct idiomasdex idiomadex[], struct idiomasdex novoidi
             novoidioma[j].cod_idioma = idioma[i].cod_idioma;
             strcpy_s(novoidioma[j].desc, idioma[i].desc);
             novoidioma[j].status = 0;
-            novoidiomadex[j].cod = idioma[i].cod_idioma;
-            novoidiomadex[j].end = i;
+            novoidiomadex[j].cod = idioma[j].cod_idioma;
+            novoidiomadex[j].end = j;
         }
     }
     for (int l = 0; l < len[0]; l++) {
@@ -307,10 +308,10 @@ void buscaaleatlicao(licoesdex licaodex[], licoes licao[], int vet[]) {
     i = licaodex[m].end;
     if ((cod == licaodex[m].cod) && licao[i].status == 0) {
         licao[i].status = 1;
-        cout << "\n\n Lição Excluido com Sucesso" << endl;
+        cout << "\n\n Lição Excluido com Sucesso, DIGITE 0 PARA SAIR" << endl;
     }
     else
-        cout << "Lição nao cadastrado" << endl;
+        cout << "Lição nao cadastrado, DIGITE 0 PARA SAIR" << endl;
 
 }
 
@@ -371,15 +372,16 @@ void inserirexercicio(exercicios ex[], exerciciosdex exdex[], int g, int vet[]) 
         cout << "Por favor informe o nivel de dificuldade do exercicio" << endl;
         cin >> ex[i].nivel_dificuldade;
         cout << "Por favor digite aqui sua pergunta" << endl;
-        cin >> ex[i].perguntas;
+        cin.ignore();
+        cin.getline(ex[i].perguntas, 80);
         cout << "Por favor digite a resposta correta para a pergunta anterior" << endl;
-        cin >> ex[i].resposta;
+        cin.getline(ex[i].resposta, 80);
         cout << "Por favor digite quantos pontos vale essa pergunta" << endl;
         cin >> ex[i].pontos;
         exindex(ex, exdex, i, vet);
         ex[i].status = 0;
         vet[2]++;
-        cout << "Para caso deseje cadastrar outras perguntas digite 's' caso deseje finalizar a operação digite 'n' ";
+        cout << "Para caso deseje cadastrar outras perguntas digite 's' caso deseje finalizar a operação digite 'n' " << endl;
         cin >> fechar;
         if (strcmp(fechar, "n") == 0) {
             return;
@@ -395,14 +397,14 @@ void exaustivaex(exercicios ex[], exerciciosdex exdex[], int vet[]) {
         int i = exdex[k].end;
 
         if (ex[i].status == 0) {
-            cout << "\nCodigo do exercicio: " << ex[i].cod_exercicio;
-            cout << "\tO nivel da dificuldade é: " << ex[i].nivel_dificuldade;
+            cout << "\nCodigo do exercicio: " << ex[i].cod_exercicio << endl;
+            cout << "\tO nivel da dificuldade é: " << ex[i].nivel_dificuldade << endl;
             cout << endl;
-            cout << "A pergunta é: " << ex[i].perguntas;
+            cout << "A pergunta é: " << ex[i].perguntas << endl;
             cout << endl;
-            cout << "A resposta é: " << ex[i].resposta;
+            cout << "A resposta é: " << ex[i].resposta << endl;
             cout << endl;
-            cout << "A quantidade de pontos que vale essa pergunta é : " << ex[i].pontos;
+            cout << "A quantidade de pontos que vale essa pergunta é : " << ex[i].pontos << endl;
             cout << endl;
 
         }
@@ -413,7 +415,7 @@ void buscaaleatex(exerciciosdex exdex[], exercicios ex[], int vet[]) {
     int cod;
     cout << "qual código você deseja excluir" << endl;
     cin >> cod;
-    int i = 0, f = vet[0];
+    int i = 0, f = vet[2];
     int m = (i + f) / 2;
     for (; f >= i && cod != exdex[m].cod; m = (i + f) / 2) {
         if (cod > exdex[m].cod)
@@ -441,10 +443,10 @@ void reorganizar_exercicio(struct exerciciosdex exdex[], struct exerciciosdex no
             novoex[j].nivel_dificuldade = ex[i].nivel_dificuldade;
             novoex[j].pontos = ex[i].pontos;
             strcpy_s(novoex[j].perguntas, ex[i].perguntas);
-            strcpy_s(novoex[j].resposta, ex[i].resposta);
+            strcpy_s(novoex[j].resposta, ex[j].resposta);
             novoex[j].status = 0;
-            novoexdex[j].cod = novoex[i].cod_exercicio;
-            novoexdex[j].end = i;
+            novoexdex[j].cod = novoex[j].cod_exercicio;
+            novoexdex[j].end = j;
         }
     }
     for (int l = 0; l < vet[2]; l++) {
@@ -472,7 +474,7 @@ void reorganizar_exercicio(struct exerciciosdex exdex[], struct exerciciosdex no
 
 int buscaex(exerciciosdex exdex[], exercicios ex[], int vet[], int cod) {
 
-    int i = 0, f = vet[0];
+    int i = 0, f = vet[2];
     int m = (i + f) / 2;
     for (; f >= i && cod != exdex[m].cod; m = (i + f) / 2) {
         if (cod > exdex[m].cod)
@@ -485,18 +487,19 @@ int buscaex(exerciciosdex exdex[], exercicios ex[], int vet[], int cod) {
     }
     else
         return -1;
+    
 }
 
 void consultaex(exercicios ex[], int posic) {
     if (posic < 0) {
-        cout << "Idioma não cadastrado, por favor refaça seu cadastro!" << endl;
+        cout << "Exercicio não cadastrado, por favor refaça seu cadastro!" << endl;
     }
     else {
         if ((ex[posic].status == 0)) {
-            cout << "O idioma escolhido foi: " << ex[posic].cod_exercicio << endl;
+            cout << "O exercicio escolhido foi: " << ex[posic].cod_exercicio << endl;
         }
         else {
-            cout << "Idioma não cadastrado, por favor  refaça seu cadastro!" << endl;
+            cout << "Exercicio não cadastrado, por favor  refaça seu cadastro!" << endl;
 
         }
     }
@@ -522,7 +525,8 @@ void inserirusuario(usuarios usuario[], usuariosdex usuariodex[], int g, int vet
         cout << "Por favor informe o codigo do usuario" << endl;
         cin >> usuario[i].cod_usuario;
         cout << "Por favor informe o nome do usuario" << endl;
-        cin >> usuario[i].nome;
+        cin.ignore();
+        cin.getline(usuario[i].nome, 30);
         cout << "Por favor digite o codigo do idioma" << endl;
         cin >> usuario[i].cod_idioma;
         consulta_idioma(idioma, buscaidioma(idiomadex, idioma, vet, usuario[i].cod_idioma)); //idioma na posicao busca .ddex 
@@ -549,6 +553,7 @@ void exaustivausuario(usuarios usuario[], usuariosdex usuariodex[], int vet[]) {
         int i = usuariodex[k].end;
         if (usuario[i].status == 0) {
             cout << "\nCodigo do usuario: " << usuario[i].cod_usuario;
+
             cout << "\tNome do usuario: " << usuario[i].nome;
             cout << endl;
             cout << "O codigo do idioma: " << usuario[i].cod_idioma;
@@ -576,10 +581,10 @@ void buscaaleatusuario(usuariosdex usuariodex[], usuarios usuario[], int vet[]) 
     i = usuariodex[m].end;
     if ((cod == usuariodex[m].cod) && usuario[i].status == 0) {
         usuario[i].status = 1;
-        cout << "\n\n Usuario Excluido com Sucesso" << endl;
+        cout << "\n\n Usuario Excluido com Sucesso, DIGITE 0 PARA SAIR" << endl;
     }
     else
-        cout << "Usuario nao cadastrado" << endl;
+        cout << "Usuario nao cadastrado, DIGITE 0 PARA SAIR" << endl;
 
 }
 void reorganizar_usuario(usuariosdex usuariodex[], usuariosdex novousuariodex[],  usuarios usuario[],  usuarios novousuario[], int vet[]) {
@@ -595,8 +600,8 @@ void reorganizar_usuario(usuariosdex usuariodex[], usuariosdex novousuariodex[],
             novousuario[j].pontos_total = usuario[i].pontos_total;
             strcpy_s(novousuario[j].nome, usuario[i].nome);
             novousuario[j].status = NULL;
-            novousuariodex[j].cod = novousuario[i].cod_usuario;
-            novousuariodex[j].end = i;
+            novousuariodex[j].cod = novousuario[j].cod_usuario;
+            novousuariodex[j].end = j;
         }
     }
     for (int l = 0; l < vet[3]; l++) {
@@ -623,7 +628,7 @@ void reorganizar_usuario(usuariosdex usuariodex[], usuariosdex novousuariodex[],
 }
 int buscausuario(usuariosdex usuariodex[], usuarios usuario[], int vet[], int cod) {
 
-    int i = 0, f = vet[0];
+    int i = 0, f = vet[3];
     int m = (i + f) / 2;
     for (; f >= i && cod != usuariodex[m].cod; m = (i + f) / 2) {
         if (cod > usuariodex[m].cod)
@@ -640,7 +645,7 @@ int buscausuario(usuariosdex usuariodex[], usuarios usuario[], int vet[], int co
 
 void consultausuario(usuarios usuario[], int posic) {
     if (posic < 0) {
-        cout << "Idioma não cadastrado, por favor refaça seu cadastro!" << endl;
+        cout << "Usuario não cadastrado, por favor refaça seu cadastro!" << endl;
     }
     else {
         if ((usuario[posic].status == 0)) {
@@ -687,19 +692,20 @@ void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usu
                   usuario[enderuser].nivel_atual++;
                   
               }
-              cout << "você acertou agora você tem " << usuario[enderuser].pontos_total << " pontos"<<endl;
+              cout << "você acertou agora você tem " << usuario[enderuser].pontos_total << " pontos e está no nivel: "<< usuario[enderuser].nivel_atual <<endl;
               cin >>palmeiras;
           }
           else {
               usuario[enderuser].pontos_total = usuario[enderuser].pontos_total - (ex[endex].pontos * 0.1);
               cout << "voce errou, estuda mais"<<endl;
-              cout << "você agora você tem " << usuario[enderuser].pontos_total << " pontos" << endl;
+              cout << "você agora você tem " << usuario[enderuser].pontos_total <<" pontos e está no nivel: " << usuario[enderuser].nivel_atual << endl;
               cin >> palmeiras;
+              
               
           }
       }
       else {
-          cout << "Seu usuario ainda não está nesse nível, pratique mais."<<endl;
+          cout << "Seu usuario ainda não está nesse nível, pratique mais. DIGITE 0 PARA SAIR."<<endl;
           return;
       }
       
@@ -741,33 +747,41 @@ void ranking(exercicios ex[], exerciciosdex exdex[], usuarios usuario[], usuario
 }
 
 */
-void ordenarPorPontuacao(usuarios usuario[], int vet[]) {
+void ranking(usuarios usuario[], int vet[]) {
+    float pontuacao1;
+    float pontuacao2;
     for (int i = 0; i < vet[3] - 1; i++) {
         for (int j = 0; j < vet[3] - i - 1; j++) {
-            if (usuario[j].pontos_total < usuario[j + 1].pontos_total) {
-                // Cria variável temporária para armazenar o usuário atual
+            // Calcula a pontuação equivalente somando a pontuação total e o nível * 100
+           pontuacao1 = usuario[j].pontos_total + usuario[j].nivel_atual * 100;
+             pontuacao2 = usuario[j + 1].pontos_total + usuario[j + 1].nivel_atual * 100;
+
+            if (pontuacao1 < pontuacao2) {
+                // Troca os usuários de posição
                 usuarios temp = usuario[j];
-                // Copie o próximo usuário para a posição atual
                 usuario[j] = usuario[j + 1];
-                // Copie o usuário temporário (anterior) para a próxima posição
                 usuario[j + 1] = temp;
             }
         }
     }
 }
 
-
 // Função para exibir o ranking dos usuários
 void exibirRanking(usuarios usuario[], int vet[]) {
     // Ordena os usuários pelo campo Pontuação_Total
-    ordenarPorPontuacao(usuario, vet);
+    ranking(usuario, vet);
 
     // Exibe o ranking em ordem decrescente
     printf(VERDE"-----------------------RANK-----------------------" RESET "\n");
-    printf("%-10s%-20s%-15s%-15s\n", "Posição", "Nome", "Pontuação Total", "Nível Atual");
-
+ 
+    
     for (int i = 0; i < vet[3]; i++) {
-        printf("%-10d%-20s%-15.2f%-15d\n", i + 1, usuario[i].nome, usuario[i].pontos_total, usuario[i].nivel_atual);
+    
+        cout << "Posição: "<<i+1 << endl;
+        cout << "Nome: " << usuario[i].nome<<endl;
+        cout << "Pontuação Total: " << usuario[i].pontos_total <<endl;
+        cout << "Nível Atual : " << usuario[i].nivel_atual<< endl;
+        cout << endl;
     }
 }
 
@@ -804,22 +818,23 @@ int main()
         system("clear||cls");
         //cout << "==============DUOLINGO==============" << endl;
         printf(VERDE"==============SASALINGO==============" RESET "\n");
-        cout << "Para cadastrar algo digite 1" << endl;
-        cout << "Para listagem de informações digite 2" << endl;
-        cout << "Para exclusão de dados digite 3" << endl;
-        cout << "Para ja seja cadastrado e queira praticar 4" << endl;
-        cout << "Para acessar o rank 5" << endl;
+        cout << "PARA CADASTRAR ALGO DIGITE 1" << endl;
+        cout << "PARA LISTAGEM DE INFORMAÇÕES DIGITE 2" << endl;
+        cout << "PARA EXCLUSÃO DE DADOS DIGITE 3" << endl;
+        cout << "PARA JA SEJA CADASTRADO E QUEIRA PRATICAR 4" << endl;
+        cout << "PARA ACESSAR O RANK 5" << endl;
+
 
         cin >> option;
         switch (option) {
         case 1:
-            system("clear||cls");
             printf(VERDE"==============SASALINGO==============" RESET "\n");
-            cout << "Para cadastrar >idioma< digite 1" << endl;
-            cout << "Para cadastrar >lição< digite 2" << endl;
-            cout << "Para cadastrar >exercicio< digite 3" << endl;
-            cout << "Para cadastrar >usuarios< digite 4" << endl;
-            cout << "Para sair digite 0" << endl;
+            cout << "PARA CADASTRAR >IDIOMA< DIGITE 1" << endl;
+            cout << "PARA CADASTRAR >LIÇÃO< DIGITE 2" << endl;
+            cout << "PARA CADASTRAR >EXERCICIO< DIGITE 3" << endl;
+            cout << "PARA CADASTRAR >USUARIOS< DIGITE 4" << endl;
+            cout << "PARA SAIR DIGITE 0" << endl;
+
             cin >> option;
             switch (option) {
             case 1:
