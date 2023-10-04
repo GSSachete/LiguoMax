@@ -706,6 +706,7 @@ void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usu
       }
       else {
           cout << "Seu usuario ainda não está nesse nível, pratique mais. DIGITE 0 PARA SAIR."<<endl;
+          cin >> palmeiras;
           return;
       }
       
@@ -815,13 +816,14 @@ int main()
     exerciciosdex novoexdex[g];
 
     while (true) {
+        setlocale(LC_ALL, "portuguese");
         system("clear||cls");
         //cout << "==============DUOLINGO==============" << endl;
         printf(VERDE"==============SASALINGO==============" RESET "\n");
         cout << "PARA CADASTRAR ALGO DIGITE 1" << endl;
         cout << "PARA LISTAGEM DE INFORMAÇÕES DIGITE 2" << endl;
         cout << "PARA EXCLUSÃO DE DADOS DIGITE 3" << endl;
-        cout << "PARA JA SEJA CADASTRADO E QUEIRA PRATICAR 4" << endl;
+        cout << "PARA CASO JA SEJA CADASTRADO E QUEIRA PRATICAR 4" << endl;
         cout << "PARA ACESSAR O RANK 5" << endl;
 
 
