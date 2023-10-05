@@ -199,10 +199,10 @@ int buscaidioma(struct idiomasdex idiomadex[], idiomas idioma[], int vet[], int 
         }
     }
 
-void reorganizar_idioma(struct idiomasdex idiomadex[], struct idiomasdex novoidiomadex[], struct idiomas idioma[], struct idiomas novoidioma[], int len[]) {
+void reorganizar_idioma(struct idiomasdex idiomadex[], struct idiomasdex novoidiomadex[], struct idiomas idioma[], struct idiomas novoidioma[], int vet[]) {
     int j = -1;
 
-    for (int k = 0; k < len[0]; k++) {
+    for (int k = 0; k < vet[0]; k++) {
         int i = idiomadex[k].end;
         if (idioma[i].status==0) {
             j++;
@@ -213,15 +213,15 @@ void reorganizar_idioma(struct idiomasdex idiomadex[], struct idiomasdex novoidi
             novoidiomadex[j].end = j;
         }
     }
-    for (int l = 0; l < len[0]; l++) {
+    for (int l = 0; l < vet[0]; l++) {
         idioma[l].cod_idioma = NULL;
         strcpy_s(idioma[l].desc, "");
         idioma[l].status = 0;
         idiomadex[l].cod = NULL;
         idiomadex[l].end = NULL;
-    len[0] = j + 1;
+        vet[0] = j + 1;
     }
-    for (int l = 0; l < len[0]; l++) {
+    for (int l = 0; l < vet[0]; l++) {
         idioma[l].cod_idioma = novoidioma[l].cod_idioma;
         strcpy_s(idioma[l].desc, novoidioma[l].desc);
         idioma[l].status = novoidioma[l].status;
@@ -659,7 +659,7 @@ void consultausuario(usuarios usuario[], int posic) {
 }
 
 //**********************************EXERCICIOS**********************************
-void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usuariosdex usuariodex[], int g, int vet []) {
+void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usuariosdex usuariodex[], int g, int vet [], licoes licao[], licoesdex licaodex []) {
     int y;
     int excod;
     int enderuser;
@@ -694,7 +694,23 @@ void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usu
               }
               cout << "você acertou agora você tem " << usuario[enderuser].pontos_total << " pontos e está no nivel: "<< usuario[enderuser].nivel_atual <<endl;
               cin >>palmeiras;
+              /*
+              for (int i = 0; i < g;i++) {
+                  if (licao[i].cod_idioma == usuario[enderuser].cod_idioma && licao[i].total_nivel <= usuario[enderuser].nivel_atual) {
+                      cout << "Digite 0 para sair" << endl;
+                      cin >> y;
+                      system("clear||cls");
+                      cout << "=======================================" << endl;
+                      cout << "Parabens, voce concluiu essa licao" << endl;
+                      cout << "Certificado recebido" << endl;
+                      cout << "=======================================" << endl;
+                      return;
+                  }
+              }
+              */
           }
+         
+          
           else {
               usuario[enderuser].pontos_total = usuario[enderuser].pontos_total - (ex[endex].pontos * 0.1);
               cout << "voce errou, estuda mais"<<endl;
@@ -710,7 +726,10 @@ void praticarex(exercicios ex[], exerciciosdex exdex[], usuarios usuario [], usu
           return;
       }
       
+    
+      
 }
+
 //*****************************rankeamento*****************************
 /*
 void ranking(exercicios ex[], exerciciosdex exdex[], usuarios usuario[], usuariosdex usuariodex[], int g, int vet[]) {
@@ -753,12 +772,12 @@ void ranking(usuarios usuario[], int vet[]) {
     float pontuacao2;
     for (int i = 0; i < vet[3] - 1; i++) {
         for (int j = 0; j < vet[3] - i - 1; j++) {
-            // Calcula a pontuação equivalente somando a pontuação total e o nível * 100
+            
            pontuacao1 = usuario[j].pontos_total + usuario[j].nivel_atual * 100;
              pontuacao2 = usuario[j + 1].pontos_total + usuario[j + 1].nivel_atual * 100;
 
             if (pontuacao1 < pontuacao2) {
-                // Troca os usuários de posição
+                // trusdepo
                 usuarios temp = usuario[j];
                 usuario[j] = usuario[j + 1];
                 usuario[j + 1] = temp;
@@ -767,12 +786,12 @@ void ranking(usuarios usuario[], int vet[]) {
     }
 }
 
-// Função para exibir o ranking dos usuários
+
 void exibirRanking(usuarios usuario[], int vet[]) {
-    // Ordena os usuários pelo campo Pontuação_Total
+    
     ranking(usuario, vet);
 
-    // Exibe o ranking em ordem decrescente
+    // Exibe decrescente
     printf(VERDE"-----------------------RANK-----------------------" RESET "\n");
  
     
@@ -816,6 +835,7 @@ int main()
     exerciciosdex novoexdex[g];
 
     while (true) {
+
         setlocale(LC_ALL, "portuguese");
         system("clear||cls");
         //cout << "==============DUOLINGO==============" << endl;
@@ -825,6 +845,7 @@ int main()
         cout << "PARA EXCLUSÃO DE DADOS DIGITE 3" << endl;
         cout << "PARA CASO JA SEJA CADASTRADO E QUEIRA PRATICAR 4" << endl;
         cout << "PARA ACESSAR O RANK 5" << endl;
+        cout << "PARA REORGANIZAR DIGITE 6" << endl;
 
 
         cin >> option;
@@ -939,7 +960,7 @@ int main()
             cin >> option;
             switch (option) {
             case 1:
-                praticarex(ex, exdex, usuario, usuariodex,  g, vet);
+                praticarex(ex, exdex, usuario, usuariodex,  g, vet, licao, licaodex);
                 break;
             case 2:
                 inserirusuario(usuario, usuariodex, g, vet, idioma, idiomadex); 
@@ -963,7 +984,31 @@ int main()
                 break;
             case 2:
                 break;
+
             }
+            break;
+        case 0:
+            printf(VERDE"=============REORGANIZAÇÃO DE DADOS=================" RESET "\n");
+            //cout<<"=============LISTAGEM DE INFORMAÇÕES================="<<endl;
+            cout << "PARA REORGANIZAR >IDIOMA< DIGITE 1" << endl;
+            cout << "PARA REORGANIZAR >LICAO< DIGITE 2" << endl;
+            cout << "PARA REORGANIZAR >EXERCICIO< DIGITE 3" << endl;
+            cout << "PARA REORGANIZAR >USUARIO< DIGITE 4" << endl;
+            cout << "PARA SAIR DIGITE 0" << endl;
+            cout << endl;
+            cin >> option;
+            switch (option) {
+               case 1:
+                   reorganizar_usuario(usuariodex, novousuariodex, usuario, novousuario, vet);
+                   cin>>pausa;
+                break;
+            case 2:
+                inserirusuario(usuario, usuariodex, g, vet, idioma, idiomadex); 
+                break;
+            case 3:
+                break;
+            }
+            
         }
 
     }; //fim do switch
